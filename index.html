@@ -201,40 +201,41 @@
 </div>
 
 <div class="section-head">
-  <p class="section-title"><span class="section-index">02</span>그룹별 예상수익 비교</p>
+  <p class="section-title"><span class="section-index">02</span>그룹별 예상수익 · 드릴다운</p>
 </div>
-<p class="helper">각 카테고리의 기본 가정값 기준 연간 예상수익 — 막대 아래 근거 표시</p>
-<div id="overviewChart" class="panel" style="margin-bottom: 1.75rem;"></div>
+<div class="panel" style="margin-bottom: 1.75rem;">
+  <p class="helper" style="margin-top:0;">각 카테고리의 기본 가정값 기준 연간 예상수익 — 막대 아래 근거 표시</p>
+  <div id="overviewChart"></div>
+
+  <div style="border-top: 1px solid var(--hair); margin: 1.5rem 0 1.25rem;"></div>
+
+  <p class="helper">그룹(대분류) 또는 세부 카테고리를 선택해 가정값을 직접 조정하세요</p>
+  <select id="categorySelect"></select>
+
+  <div class="slider-row">
+    <div class="slider-label"><label id="qtyLabel">계약 매장수</label><span class="val" id="qtyOut">-</span></div>
+    <input type="range" id="qtySlider">
+  </div>
+  <div class="slider-row">
+    <div class="slider-label"><label id="amtLabel">매장당 월매출</label><span class="val" id="amtOut">-</span></div>
+    <input type="range" id="amtSlider">
+  </div>
+  <div class="slider-row">
+    <div class="slider-label"><label>Zekto 거래수수료율</label><span class="val" id="feeOut">-</span></div>
+    <input type="range" id="feeSlider" min="1" max="11" step="0.5">
+  </div>
+  <button class="criteria-btn" onclick="toggleCriteria('basisNote', this)" style="margin-bottom: 4px;">기준 보기</button>
+  <p class="note hidden" id="basisNote"></p>
+
+  <div class="cards" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 0;">
+    <div class="card"><p class="label">연환산 유통액</p><p class="value" id="gmvOut">-</p></div>
+    <div class="card"><p class="label">Zekto 예상수익</p><p class="value" id="revenueOut">-</p></div>
+    <div class="card"><p class="label">평균 마진율(1개당)</p><p class="value" id="marginOut">-</p></div>
+  </div>
+</div>
 
 <div class="section-head">
-  <p class="section-title"><span class="section-index">03</span>카테고리 드릴다운</p>
-</div>
-<p class="helper">그룹(대분류) 또는 세부 카테고리를 선택해 가정값을 직접 조정하세요</p>
-<select id="categorySelect"></select>
-
-<div class="slider-row">
-  <div class="slider-label"><label id="qtyLabel">계약 매장수</label><span class="val" id="qtyOut">-</span></div>
-  <input type="range" id="qtySlider">
-</div>
-<div class="slider-row">
-  <div class="slider-label"><label id="amtLabel">매장당 월매출</label><span class="val" id="amtOut">-</span></div>
-  <input type="range" id="amtSlider">
-</div>
-<div class="slider-row">
-  <div class="slider-label"><label>Zekto 거래수수료율</label><span class="val" id="feeOut">-</span></div>
-  <input type="range" id="feeSlider" min="1" max="11" step="0.5">
-</div>
-<button class="criteria-btn" onclick="toggleCriteria('basisNote', this)" style="margin-bottom: 4px;">기준 보기</button>
-<p class="note hidden" id="basisNote"></p>
-
-<div class="cards" style="grid-template-columns: repeat(3, 1fr);">
-  <div class="card"><p class="label">연환산 유통액</p><p class="value" id="gmvOut">-</p></div>
-  <div class="card"><p class="label">Zekto 예상수익</p><p class="value" id="revenueOut">-</p></div>
-  <div class="card"><p class="label">평균 마진율(1개당)</p><p class="value" id="marginOut">-</p></div>
-</div>
-
-<div class="section-head">
-  <p class="section-title"><span class="section-index">04</span>포트폴리오 합산</p>
+  <p class="section-title"><span class="section-index">03</span>포트폴리오 합산</p>
 </div>
 <p class="helper">Zekto는 단일 카테고리가 아니라 여러 카테고리를 조합해 수익화합니다. 체크한 카테고리 중 현재 드릴다운 중인 항목은 슬라이더 값을, 나머지는 기본 가정값을 사용해 합산합니다.</p>
 <div id="portfolioList" class="panel" style="margin-bottom: 12px;"></div>
@@ -244,7 +245,7 @@
 </div>
 
 <div class="section-head">
-  <p class="section-title"><span class="section-index">05</span>의료 카테고리 · 알선 법적 규제</p>
+  <p class="section-title"><span class="section-index">04</span>의료 카테고리 · 알선 법적 규제</p>
   <button class="criteria-btn" onclick="toggleCriteria('legalCriteria', this)">기준 보기</button>
 </div>
 <p class="helper">쿠폰·선결제 시술권 판매가 왜 카페·식당과 다르게 취급되는지</p>
@@ -285,7 +286,7 @@
 </div>
 
 <div class="section-head">
-  <p class="section-title"><span class="section-index">06</span>오프라인 검증 계획</p>
+  <p class="section-title"><span class="section-index">05</span>오프라인 검증 계획</p>
 </div>
 <p class="helper">우선순위·기간·성공기준(공통)</p>
 
