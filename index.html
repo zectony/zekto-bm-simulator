@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Zekto · BM 사업성 검토</title>
+<title>마켓플랫폼 BM 사업성 검토 시뮬레이터</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -36,24 +36,34 @@
   .num { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; }
 
   header {
-    padding: 3rem 0 2rem;
+    padding: 2.5rem 0 2rem;
     border-bottom: 1px solid var(--hair);
     margin-bottom: 2.25rem;
     position: relative;
   }
   #downloadBtn {
-    position: absolute; top: 3rem; right: 0;
+    position: absolute; top: 2.5rem; right: 0;
     text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
   }
+  .doc-meta {
+    display: flex; flex-wrap: wrap; gap: 18px; font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px; color: var(--text-muted); letter-spacing: 0.03em;
+    margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--hair);
+  }
+  .doc-meta b { color: var(--text-secondary); font-weight: 500; }
   .eyebrow {
     font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase;
     color: var(--gold); font-weight: 700; margin: 0 0 0.9rem;
   }
   h1 {
-    font-family: 'Noto Sans KR', sans-serif; font-weight: 700; font-size: 32px;
-    letter-spacing: -0.01em; margin: 0 0 0.6rem; color: #ffffff;
+    font-family: 'Noto Sans KR', sans-serif; font-weight: 700; font-size: 30px;
+    letter-spacing: -0.01em; margin: 0 0 0.5rem; color: #ffffff;
   }
-  p.sub { color: var(--text-secondary); font-size: 15px; margin: 0; max-width: 520px; }
+  h1 .en {
+    font-family: 'IBM Plex Mono', monospace; font-weight: 400; font-size: 15px;
+    color: var(--text-muted); letter-spacing: 0.01em; margin-left: 10px; vertical-align: middle;
+  }
+  p.sub { color: var(--text-secondary); font-size: 15px; margin: 0; max-width: 540px; }
 
   .section-head {
     display: flex; align-items: baseline; justify-content: space-between;
@@ -61,6 +71,10 @@
   }
   .section-title {
     font-family: 'Noto Sans KR', sans-serif; font-size: 18.5px; font-weight: 700; color: #ffffff; margin: 0;
+  }
+  .section-title .en {
+    font-family: 'IBM Plex Mono', monospace; font-weight: 400; font-size: 12px;
+    color: var(--gold); letter-spacing: 0.02em; margin-left: 8px;
   }
   .section-index {
     font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gold);
@@ -187,13 +201,19 @@
 
 <header>
   <a id="downloadBtn" class="criteria-btn" href="#" download="zekto-bm-simulator.html">HTML 다운로드</a>
-  <p class="eyebrow">Zekto · Market Entry Feasibility</p>
-  <h1>BM 사업성 검토</h1>
+  <p class="eyebrow">Zekto · Market Platform</p>
+  <h1>마켓플랫폼 BM 사업성 검토 시뮬레이터<span class="en">Market Platform BM Feasibility Simulator</span></h1>
   <p class="sub">카테고리별 시장침투 우선순위와 민감도 시뮬레이터. 가정을 조정하며 여러 카테고리를 조합해 합산 수익을 확인합니다.</p>
+  <div class="doc-meta">
+    <span>문서번호 <b>ZKT-BM-2026-08</b></span>
+    <span>버전 <b>v1.5</b></span>
+    <span>분류 <b>내부 검토용</b></span>
+    <span>작성 <b>Zekto Strategy</b></span>
+  </div>
 </header>
 
 <div class="section-head">
-  <p class="section-title"><span class="section-index">01</span>시장침투 우선순위</p>
+  <p class="section-title"><span class="section-index">01</span>시장침투 우선순위<span class="en">Market Entry Priority</span></p>
   <div style="display:flex; gap:8px;">
     <button class="criteria-btn" onclick="openCriteriaPanel('시장침투 우선순위 · 분류 기준', document.getElementById('quadrantCriteriaSrc').innerHTML)">분류 기준</button>
     <button class="criteria-btn" onclick="openCriteriaPanel('의료 카테고리 · 알선 법적 규제', document.getElementById('legalCriteriaSrc').innerHTML)">의료 법적 규제</button>
@@ -242,7 +262,7 @@
 </div>
 
 <div class="section-head">
-  <p class="section-title"><span class="section-index">02</span>Zekto 예상수익 비교 · 드릴다운</p>
+  <p class="section-title"><span class="section-index">02</span>Zekto 예상수익 비교 · 드릴다운<span class="en">Revenue Simulation</span></p>
   <button class="criteria-btn" onclick="openOverviewBasisPanel()">기준 보기</button>
 </div>
 <div class="panel" style="margin-bottom: 1.75rem;">
@@ -294,7 +314,7 @@
 </div>
 
 <div class="section-head">
-  <p class="section-title"><span class="section-index">03</span>포트폴리오 합산</p>
+  <p class="section-title"><span class="section-index">03</span>포트폴리오 합산<span class="en">Portfolio Aggregation</span></p>
 </div>
 <p class="helper">Zekto는 단일 카테고리가 아니라 여러 카테고리를 조합해 수익화합니다. 체크한 카테고리 중 현재 드릴다운 중인 항목은 슬라이더 값을, 나머지는 기본 가정값을 사용해 합산합니다.</p>
 <div id="portfolioList" class="panel" style="margin-bottom: 12px;"></div>
@@ -340,7 +360,7 @@
 </div>
 
 <div class="section-head">
-  <p class="section-title"><span class="section-index">04</span>오프라인 검증 계획</p>
+  <p class="section-title"><span class="section-index">04</span>오프라인 검증 계획<span class="en">Field Validation Plan</span></p>
 </div>
 <p class="helper">우선순위·기간·성공기준(공통)</p>
 
