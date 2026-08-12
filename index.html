@@ -164,6 +164,23 @@
   }
   .criteria-btn:hover { background: rgba(201,162,39,0.26); }
 
+  .mode-btn {
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.02em;
+    padding: 8px 14px; border-radius: 7px; border: 1px solid var(--hair-strong);
+    color: var(--text-muted); background: transparent; cursor: pointer;
+  }
+  .mode-btn:hover { color: var(--text-secondary); background: rgba(255,255,255,0.04); }
+  .mode-btn.active { background: var(--gold-dim); color: var(--gold); border-color: rgba(224,184,74,0.4); font-weight: 500; }
+  .mode-btn.small { padding: 5px 11px; font-size: 11px; }
+  .mode-btn.danger.active { background: rgba(226,96,79,0.15); color: #ec8f80; border-color: rgba(226,96,79,0.35); }
+
+  .number-input {
+    width: 100%; height: 38px; border-radius: 8px; border: 1px solid var(--hair-strong);
+    background: var(--panel-2); color: var(--text-primary); padding: 0 12px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 14px;
+  }
+  .number-input:focus { outline: none; border-color: var(--gold); }
+
   .helper { color: var(--text-secondary); font-size: 13.5px; margin: 0 0 0.9rem; }
 
   footer { margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--hair); font-size: 12px; color: var(--text-muted); }
@@ -315,23 +332,49 @@
 
   <p class="helper">그룹(대분류) 또는 세부 카테고리를 선택해 가정값을 직접 조정하세요. <span style="color: var(--text-muted);">아래 결과는 선택한 카테고리 1개만의 값이며, 위 "13개 카테고리 합계" 카드에도 실시간으로 반영됩니다.</span></p>
   <select id="categorySelect"></select>
-  <div id="defaultAssumptionCaption" style="font-size: 11.5px; color: var(--text-muted); background: rgba(255,255,255,0.05); border-radius: 6px; padding: 8px 10px; margin: 8px 0 16px;"></div>
+  <div id="defaultAssumptionCaption" style="font-size: 11.5px; color: var(--text-muted); background: rgba(255,255,255,0.05); border-radius: 6px; padding: 8px 10px; margin: 8px 0 12px;"></div>
+
+  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom: 12px;">
+    <button class="mode-btn" id="modeGoalBtn" onclick="setMode('goal')">가정값 (목표 역산)</button>
+    <button class="mode-btn active" id="modeManualBtn" onclick="setMode('manual')">직접 선택</button>
+    <button class="mode-btn danger" id="modeResetBtn" onclick="resetAssumptions()">초기화</button>
+  </div>
+
+  <div id="goalPanel" class="panel" style="display:none; margin-bottom: 16px;">
+    <p class="helper" style="margin-top:0;">Zekto가 이 카테고리에서 <b style="color:#fff; font-weight:500;">현재 매장수·매출·침투율 가정</b>으로 목표 월수익을 내려면 수수료율이 얼마여야 하는지 역산합니다. 기본 목표는 월 5억원(=50,000만원).</p>
+    <div class="slider-row" style="margin-bottom: 10px;">
+      <div class="slider-label"><label>월 기대수익 (만원)</label></div>
+      <input type="number" id="goalInput" class="number-input" value="50000" step="1000" min="0">
+    </div>
+    <button class="criteria-btn" onclick="applyGoal()">이 목표로 수수료율 역산</button>
+    <p class="note" id="goalResultNote" style="margin-top:10px; margin-bottom:0;"></p>
+  </div>
+
+  <div style="display:flex; align-items:center; gap:8px; margin-bottom: 14px;">
+    <span style="font-size:12px; color:var(--text-muted);">입력 방식</span>
+    <button class="mode-btn small active" id="inputSliderBtn" onclick="setInputMode('slider')">스크롤</button>
+    <button class="mode-btn small" id="inputNumberBtn" onclick="setInputMode('number')">숫자입력</button>
+  </div>
 
   <div class="slider-row">
     <div class="slider-label"><label id="qtyLabel">계약 매장수</label><span class="val" id="qtyOut">-</span></div>
     <input type="range" id="qtySlider">
+    <input type="number" id="qtyNumber" class="number-input" style="display:none; margin-top:6px;">
   </div>
   <div class="slider-row">
     <div class="slider-label"><label id="amtLabel">매장당 월매출</label><span class="val" id="amtOut">-</span></div>
     <input type="range" id="amtSlider">
+    <input type="number" id="amtNumber" class="number-input" style="display:none; margin-top:6px;">
   </div>
   <div class="slider-row">
     <div class="slider-label"><label>Zekto 결제 침투율 <span style="color:var(--text-muted); font-weight:400;">(전체 외국인 매출 중 Zekto로 결제하는 비율)</span></label><span class="val" id="penOut">-</span></div>
     <input type="range" id="penSlider" min="1" max="100" step="1">
+    <input type="number" id="penNumber" class="number-input" style="display:none; margin-top:6px;" min="1" max="100" step="1">
   </div>
   <div class="slider-row">
     <div class="slider-label"><label id="feeLabel">할인권 판매 수수료율</label><span class="val" id="feeOut">-</span></div>
     <input type="range" id="feeSlider" min="1" max="11" step="0.5">
+    <input type="number" id="feeNumber" class="number-input" style="display:none; margin-top:6px;" step="0.1">
   </div>
   <button class="criteria-btn" onclick="openBasisPanel()" style="margin-bottom: 4px;">기준 보기</button>
   <p style="display:none;" id="basisNote"></p>
@@ -660,13 +703,30 @@ function applyPreset(key) {
   }
   document.getElementById('basisNote').textContent = p.basis;
 
+  // 숫자입력 병렬 필드의 min/max/step도 동기화
+  const qtyNumber = document.getElementById('qtyNumber');
+  qtyNumber.min = p.qtyMin; qtyNumber.max = p.qtyMax; qtyNumber.step = p.qtyStep;
+  const amtNumber = document.getElementById('amtNumber');
+  amtNumber.min = p.amtMin; amtNumber.max = p.amtMax; amtNumber.step = p.amtStep;
+  const feeNumber = document.getElementById('feeNumber');
+  if (p.feeValues) {
+    feeNumber.min = Math.min(...p.feeValues); feeNumber.max = Math.max(...p.feeValues);
+  } else {
+    feeNumber.min = 1; feeNumber.max = 11;
+  }
+
+  renderDefaultCaption(p);
+  setMode('manual');
+  document.getElementById('goalResultNote').textContent = '';
+  update();
+}
+
+function renderDefaultCaption(p) {
   const defFeeDisp = p.feeDefault < 1 ? p.feeDefault.toFixed(1) : p.feeDefault;
   document.getElementById('defaultAssumptionCaption').innerHTML =
     '<b style="color: var(--text-secondary); font-weight: 500;">기본 가정값(변경 전 기준선):</b> ' +
     fmt(p.qtyDefault) + p.qtyUnit + ' · ' + fmt(p.amtDefault) + p.amtUnit +
     ' · 침투율 ' + p.penetrationDefault + '% · ' + (p.feeLabel || '할인권 판매 수수료율') + ' ' + defFeeDisp + '%';
-
-  update();
 }
 
 function getCurrentFee(p) {
@@ -696,6 +756,71 @@ function openBasisPanel() {
   openCriteriaPanel(p.name + ' · 근거', p.basis);
 }
 
+// ── 입력 방식 토글 (스크롤 vs 숫자입력) ──────────────────────
+let inputMode = 'slider';
+function setInputMode(mode) {
+  inputMode = mode;
+  document.getElementById('inputSliderBtn').classList.toggle('active', mode === 'slider');
+  document.getElementById('inputNumberBtn').classList.toggle('active', mode === 'number');
+  ['qty', 'amt', 'pen', 'fee'].forEach(function (k) {
+    document.getElementById(k + 'Slider').style.display = mode === 'slider' ? '' : 'none';
+    document.getElementById(k + 'Number').style.display = mode === 'number' ? 'block' : 'none';
+  });
+}
+
+// ── 가정값(목표 역산) / 직접 선택 / 초기화 모드 ──────────────────
+let currentMode = 'manual';
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('modeGoalBtn').classList.toggle('active', mode === 'goal');
+  document.getElementById('modeManualBtn').classList.toggle('active', mode === 'manual');
+  document.getElementById('goalPanel').style.display = mode === 'goal' ? 'block' : 'none';
+}
+
+function applyGoal() {
+  const p = presets[select.value];
+  const target = Number(document.getElementById('goalInput').value); // 월 기대수익, 만원
+  const qty = Number(qtySlider.value), amt = Number(amtSlider.value), pen = Number(penSlider.value);
+  const monthlyZektoGmv = qty * amt * (pen / 100); // 만원/월
+  const note = document.getElementById('goalResultNote');
+  if (!(monthlyZektoGmv > 0)) {
+    note.innerHTML = '<span style="color: var(--tier-4);">매장수·매출·침투율이 0이라 역산할 수 없습니다. 먼저 값을 조정하세요.</span>';
+    return;
+  }
+  let requiredFee = (target / monthlyZektoGmv) * 100;
+  const maxFee = p.feeValues ? Math.max(...p.feeValues) : 11;
+  const minFee = p.feeValues ? Math.min(...p.feeValues) : 1;
+
+  if (requiredFee > maxFee) {
+    note.innerHTML = '<span style="color: var(--tier-4);">이 목표는 현재 가정(매장수·매출·침투율)으로 달성 불가능 — 필요 수수료율 <b>' + requiredFee.toFixed(2) + '%</b>가 최대 허용치(' + maxFee + '%)를 초과합니다. 매장수·매출·침투율을 먼저 늘려야 합니다.</span>';
+    requiredFee = maxFee;
+  } else if (requiredFee < minFee) {
+    note.innerHTML = '월 ' + fmt(target) + '만원 목표는 최소 수수료율(' + minFee + '%)로도 이미 초과 달성됩니다. 역산된 수수료율: <b style="color:#fff;">' + requiredFee.toFixed(2) + '%</b>';
+  } else {
+    note.innerHTML = '월 ' + fmt(target) + '만원 목표 달성에 필요한 수수료율: <b style="color:#fff;">' + requiredFee.toFixed(2) + '%</b>';
+  }
+
+  if (p.feeValues) {
+    let bestIdx = 0, bestDiff = Infinity;
+    p.feeValues.forEach(function (fv, idx) { const d = Math.abs(fv - requiredFee); if (d < bestDiff) { bestDiff = d; bestIdx = idx; } });
+    feeSlider.value = bestIdx;
+  } else {
+    feeSlider.value = Math.max(minFee, Math.min(maxFee, requiredFee));
+  }
+
+  document.getElementById('defaultAssumptionCaption').innerHTML =
+    '<b style="color: var(--gold); font-weight: 500;">사용자가 입력한 월 기대수익 기준:</b> 월 ' + fmt(target) + '만원 목표 → 역산 수수료율 ' + requiredFee.toFixed(2) + '%';
+
+  update();
+}
+
+function resetAssumptions() {
+  if (!confirm('초기화 할거에요?')) return;
+  document.getElementById('goalInput').value = 50000;
+  document.getElementById('goalResultNote').textContent = '';
+  applyPreset(select.value);
+}
+
 function update() {
   const key = select.value;
   const p = presets[key];
@@ -717,6 +842,11 @@ function update() {
   document.getElementById('zektoGmvOut').textContent = zektoGmvEok.toFixed(1) + '억원';
   document.getElementById('revenueOut').textContent = revenueEok.toFixed(1) + '억원';
   document.getElementById('marginOut').textContent = p.marginRate + '%';
+
+  document.getElementById('qtyNumber').value = qty;
+  document.getElementById('amtNumber').value = amt;
+  document.getElementById('penNumber').value = pen;
+  document.getElementById('feeNumber').value = fee;
 
   renderOverview();
   updatePortfolio();
@@ -760,6 +890,23 @@ function updatePortfolio() {
 
 select.addEventListener('change', () => applyPreset(select.value));
 [qtySlider, amtSlider, penSlider, feeSlider].forEach(s => s.addEventListener('input', update));
+
+// 숫자입력 필드 → 슬라이더 값 동기화
+document.getElementById('qtyNumber').addEventListener('input', function () { qtySlider.value = this.value; update(); });
+document.getElementById('amtNumber').addEventListener('input', function () { amtSlider.value = this.value; update(); });
+document.getElementById('penNumber').addEventListener('input', function () { penSlider.value = this.value; update(); });
+document.getElementById('feeNumber').addEventListener('input', function () {
+  const p = presets[select.value];
+  const v = Number(this.value);
+  if (p.feeValues) {
+    let bestIdx = 0, bestDiff = Infinity;
+    p.feeValues.forEach(function (fv, idx) { const d = Math.abs(fv - v); if (d < bestDiff) { bestDiff = d; bestIdx = idx; } });
+    feeSlider.value = bestIdx;
+  } else {
+    feeSlider.value = v;
+  }
+  update();
+});
 
 renderOverview();
 renderPortfolio();
