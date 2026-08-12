@@ -156,9 +156,9 @@
 
 <div class="section-head">
   <p class="section-title"><span class="section-index">01</span>시장침투 우선순위</p>
-  <button class="criteria-btn" onclick="toggleCriteria('quadrantCriteria', this)">기준 숨기기</button>
+  <button class="criteria-btn" onclick="toggleCriteria('quadrantCriteria', this)">기준 보기</button>
 </div>
-<div id="quadrantCriteria" class="note panel" style="margin-bottom: 12px;">
+<div id="quadrantCriteria" class="hidden note panel" style="margin-bottom: 12px;">
   <b style="color: var(--text-primary); font-weight: 500;">분류 기준</b><br>
   · <b style="color: var(--tier-1); font-weight: 500;">1차 진입(저장벽·고수익)</b>: 리테일 마진 20~35%대, 의료법 등 특별 규제 없음, 최고 성장률(+35~191%)<br>
   · <b style="color: var(--tier-2); font-weight: 500;">2차(저장벽·저수익)</b>: 계약은 쉽지만 건당 단가가 낮아(즉석사진 5천원대 등) 수익성 제한적<br>
@@ -202,11 +202,9 @@
 
 <div class="section-head">
   <p class="section-title"><span class="section-index">02</span>그룹별 예상수익 비교</p>
-  <button class="criteria-btn" onclick="toggleCriteria('overviewCriteria', this)">기준 숨기기</button>
 </div>
-<p class="helper">각 카테고리의 기본 가정값 기준 연간 예상수익</p>
-<div id="overviewChart" class="panel" style="margin-bottom: 12px;"></div>
-<div id="overviewCriteria" class="" style="margin-bottom: 1.75rem;"></div>
+<p class="helper">각 카테고리의 기본 가정값 기준 연간 예상수익 — 막대 아래 근거 표시</p>
+<div id="overviewChart" class="panel" style="margin-bottom: 1.75rem;"></div>
 
 <div class="section-head">
   <p class="section-title"><span class="section-index">03</span>카테고리 드릴다운</p>
@@ -226,8 +224,8 @@
   <div class="slider-label"><label>Zekto 거래수수료율</label><span class="val" id="feeOut">-</span></div>
   <input type="range" id="feeSlider" min="1" max="11" step="0.5">
 </div>
-<button class="criteria-btn" onclick="toggleCriteria('basisNote', this)" style="margin-bottom: 4px;">기준 숨기기</button>
-<p class="note" id="basisNote"></p>
+<button class="criteria-btn" onclick="toggleCriteria('basisNote', this)" style="margin-bottom: 4px;">기준 보기</button>
+<p class="note hidden" id="basisNote"></p>
 
 <div class="cards" style="grid-template-columns: repeat(3, 1fr);">
   <div class="card"><p class="label">연환산 유통액</p><p class="value" id="gmvOut">-</p></div>
@@ -247,10 +245,10 @@
 
 <div class="section-head">
   <p class="section-title"><span class="section-index">05</span>의료 카테고리 · 알선 법적 규제</p>
-  <button class="criteria-btn" onclick="toggleCriteria('legalCriteria', this)">기준 숨기기</button>
+  <button class="criteria-btn" onclick="toggleCriteria('legalCriteria', this)">기준 보기</button>
 </div>
 <p class="helper">쿠폰·선결제 시술권 판매가 왜 카페·식당과 다르게 취급되는지</p>
-<div id="legalCriteria" class="panel" style="margin-bottom: 1.75rem; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
+<div id="legalCriteria" class="hidden panel" style="margin-bottom: 1.75rem; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
 
 <p style="color: #fff; font-weight: 700; margin: 0 0 8px;">근거 법령 · 처벌</p>
 <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 12.5px;">
@@ -440,19 +438,22 @@ function computeDefaultRevenue(p) {
   return gmv * (p.feeDefault / 100);
 }
 function renderOverview() {
-  const rows = Object.entries(presets).map(([key, p]) => ({ key, name: p.name, group: p.group, rev: computeDefaultRevenue(p) }));
+  const rows = Object.entries(presets).map(([key, p]) => ({ key, name: p.name, group: p.group, rev: computeDefaultRevenue(p), basis: p.basis }));
   rows.sort((a, b) => b.rev - a.rev);
   const maxRev = Math.max(...rows.map(r => r.rev));
   const container = document.getElementById('overviewChart');
   container.innerHTML = rows.map(r => {
     const pct = Math.max(4, (r.rev / maxRev) * 100);
     const color = groupColors[r.group] || '#8B93A1';
-    return '<div style="display:flex; align-items:center; gap:10px; margin-bottom:9px; font-size:12.5px;">' +
-      '<span style="width:150px; flex-shrink:0; color:var(--text-secondary);">' + r.name + '</span>' +
-      '<div style="flex:1; background:rgba(255,255,255,0.10); border-radius:3px; height:14px; position:relative;">' +
-        '<div style="background:' + color + '; width:' + pct + '%; height:100%; border-radius:3px;"></div>' +
+    return '<div style="margin-bottom:14px;">' +
+      '<div style="display:flex; align-items:center; gap:10px; font-size:12.5px; margin-bottom:4px;">' +
+        '<span style="width:150px; flex-shrink:0; color:var(--text-secondary);">' + r.name + '</span>' +
+        '<div style="flex:1; background:rgba(255,255,255,0.10); border-radius:3px; height:14px; position:relative;">' +
+          '<div style="background:' + color + '; width:' + pct + '%; height:100%; border-radius:3px;"></div>' +
+        '</div>' +
+        '<span class="num" style="width:72px; text-align:right; flex-shrink:0; font-weight:500; color:#fff;">' + r.rev.toFixed(1) + '억</span>' +
       '</div>' +
-      '<span class="num" style="width:72px; text-align:right; flex-shrink:0; font-weight:500; color:#fff;">' + r.rev.toFixed(1) + '억</span>' +
+      '<div style="padding-left:160px; font-size:11.5px; color:var(--text-muted); line-height:1.5;">' + r.basis + '</div>' +
     '</div>';
   }).join('');
 }
@@ -491,15 +492,6 @@ function toggleCriteria(id, btn) {
   const willShow = el.classList.contains('hidden');
   el.classList.toggle('hidden');
   btn.textContent = willShow ? '기준 숨기기' : '기준 보기';
-}
-
-function renderOverviewCriteria() {
-  const el = document.getElementById('overviewCriteria');
-  el.innerHTML = Object.entries(presets).map(([key, p]) => {
-    return '<div class="panel" style="margin-bottom: 8px; font-size: 12.5px; color: var(--text-secondary); line-height: 1.55;">' +
-      '<b style="color: #fff; font-weight: 500;">' + p.name + '</b> — ' + p.basis +
-    '</div>';
-  }).join('');
 }
 
 function update() {
@@ -561,7 +553,6 @@ function updatePortfolio() {
 select.addEventListener('change', () => applyPreset(select.value));
 [qtySlider, amtSlider, feeSlider].forEach(s => s.addEventListener('input', update));
 renderOverview();
-renderOverviewCriteria();
 renderPortfolio();
 select.value = 'cosmetics';
 applyPreset('cosmetics');
