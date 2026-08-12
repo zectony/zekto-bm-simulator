@@ -194,8 +194,12 @@
 
 <div class="section-head">
   <p class="section-title"><span class="section-index">01</span>시장침투 우선순위</p>
-  <button class="criteria-btn" onclick="openCriteriaPanel('시장침투 우선순위 · 분류 기준', document.getElementById('quadrantCriteriaSrc').innerHTML)">기준 보기</button>
+  <div style="display:flex; gap:8px;">
+    <button class="criteria-btn" onclick="openCriteriaPanel('시장침투 우선순위 · 분류 기준', document.getElementById('quadrantCriteriaSrc').innerHTML)">분류 기준</button>
+    <button class="criteria-btn" onclick="openCriteriaPanel('의료 카테고리 · 알선 법적 규제', document.getElementById('legalCriteriaSrc').innerHTML)">의료 법적 규제</button>
+  </div>
 </div>
+<p class="helper">저장벽·고장벽 분류 기준, 그리고 쿠폰·선결제 시술권 판매가 왜 카페·식당과 다르게 취급되는지</p>
 <div id="quadrantCriteriaSrc" style="display:none;">
   · <b style="color: var(--tier-1); font-weight: 500;">1차 진입(저장벽·고수익)</b>: 리테일 마진 20~35%대, 의료법 등 특별 규제 없음, 최고 성장률(+35~191%)<br>
   · <b style="color: var(--tier-2); font-weight: 500;">2차(저장벽·저수익)</b>: 계약은 쉽지만 건당 단가가 낮아(즉석사진 5천원대 등) 수익성 제한적<br>
@@ -289,11 +293,6 @@
   <div class="card"><p class="label">합산 예상수익</p><p class="value" id="portfolioRevenue">0억원</p></div>
 </div>
 
-<div class="section-head">
-  <p class="section-title"><span class="section-index">04</span>의료 카테고리 · 알선 법적 규제</p>
-  <button class="criteria-btn" onclick="openCriteriaPanel('의료 카테고리 · 알선 법적 규제', document.getElementById('legalCriteriaSrc').innerHTML)">기준 보기</button>
-</div>
-<p class="helper">쿠폰·선결제 시술권 판매가 왜 카페·식당과 다르게 취급되는지</p>
 <div id="legalCriteriaSrc" style="display:none; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
 
 <p style="color: #fff; font-weight: 700; margin: 0 0 8px;">근거 법령 · 처벌</p>
@@ -331,7 +330,7 @@
 </div>
 
 <div class="section-head">
-  <p class="section-title"><span class="section-index">05</span>오프라인 검증 계획</p>
+  <p class="section-title"><span class="section-index">04</span>오프라인 검증 계획</p>
 </div>
 <p class="helper">우선순위·기간·성공기준(공통)</p>
 
