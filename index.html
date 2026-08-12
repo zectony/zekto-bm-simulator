@@ -35,6 +35,19 @@
   }
   .num { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; }
 
+  .sim-nav {
+    display: flex; gap: 6px; margin-bottom: 1.75rem;
+  }
+  .sim-nav a {
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.01em;
+    padding: 7px 14px; border-radius: 7px; text-decoration: none;
+    border: 1px solid var(--hair-strong); color: var(--text-muted);
+  }
+  .sim-nav a:hover { color: var(--text-secondary); background: rgba(255,255,255,0.04); }
+  .sim-nav a.active {
+    background: var(--gold-dim); color: var(--gold); border-color: rgba(224,184,74,0.4); font-weight: 500;
+  }
+
   header {
     padding: 2.5rem 0 2rem;
     border-bottom: 1px solid var(--hair);
@@ -196,6 +209,11 @@
 </head>
 <body>
 
+<nav class="sim-nav">
+  <a href="./" class="active">마켓플랫폼 BM 사업성 검토</a>
+  <a href="./wechat.html">위챗페이 가맹점 수익</a>
+</nav>
+
 <header>
   <a id="downloadBtn" class="criteria-btn" href="#" download="zekto-bm-simulator.html">HTML 다운로드</a>
   <p class="eyebrow">Market Platform BM Feasibility Simulator</p>
@@ -203,8 +221,6 @@
   <p class="sub">카테고리별 시장침투 우선순위와 민감도 시뮬레이터. 가정을 조정하며 여러 카테고리를 조합해 합산 수익을 확인합니다.</p>
   <p class="sub" style="margin-top: 0.5rem;">
     <a href="https://app.notion.com/p/3ba88990521781ca9f97e92ac5934e8f" target="_blank" rel="noopener" style="color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(224,184,74,0.4);">마켓플랫폼 사업성 검토 및 시장분석 계획 (Notion) →</a>
-    &nbsp;·&nbsp;
-    <a href="./wechat.html" style="color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(224,184,74,0.4);">위챗페이 가맹점 수익 시뮬레이터 →</a>
   </p>
   <div class="doc-meta">
     <span>문서번호 <b>ZKT-BM-2026-08</b></span>
