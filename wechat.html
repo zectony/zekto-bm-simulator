@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>마켓플랫폼 BM 사업성 검토 시뮬레이터</title>
+<title>위챗페이 가맹점 수익 시뮬레이터</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -197,17 +197,17 @@
 <body>
 
 <header>
-  <a id="downloadBtn" class="criteria-btn" href="#" download="zekto-bm-simulator.html">HTML 다운로드</a>
-  <p class="eyebrow">Market Platform BM Feasibility Simulator</p>
-  <h1>마켓플랫폼 BM 사업성 검토 시뮬레이터</h1>
+  <a id="downloadBtn" class="criteria-btn" href="#" download="wechat-pay-simulator.html">HTML 다운로드</a>
+  <p class="eyebrow">WeChat Pay Merchant Revenue Simulator</p>
+  <h1>위챗페이 가맹점 수익 시뮬레이터</h1>
   <p class="sub">카테고리별 시장침투 우선순위와 민감도 시뮬레이터. 가정을 조정하며 여러 카테고리를 조합해 합산 수익을 확인합니다.</p>
   <p class="sub" style="margin-top: 0.5rem;">
     <a href="https://app.notion.com/p/3ba88990521781ca9f97e92ac5934e8f" target="_blank" rel="noopener" style="color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(224,184,74,0.4);">마켓플랫폼 사업성 검토 및 시장분석 계획 (Notion) →</a>
     &nbsp;·&nbsp;
-    <a href="./wechat.html" style="color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(224,184,74,0.4);">위챗페이 가맹점 수익 시뮬레이터 →</a>
+    <a href="./" style="color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(224,184,74,0.4);">← 마켓플랫폼 BM 사업성 검토 시뮬레이터로</a>
   </p>
   <div class="doc-meta">
-    <span>문서번호 <b>ZKT-BM-2026-08</b></span>
+    <span>문서번호 <b>ZKT-WCP-2026-08</b></span>
     <span>버전 <b>v1.5</b></span>
     <span>분류 <b>내부 검토용</b></span>
     <span>작성 <b>Zekto Strategy</b></span>
@@ -281,7 +281,7 @@
   <div id="totalCriteriaSrc" style="display:none;">
     <p style="margin: 0 0 12px;"><b style="color:#fff; font-weight:500;">① 매장 전체 외국인매출(시장 규모)</b> = 계약 매장수 × 매장당(또는 건당) 매출 × 연간 배수(월매출은 ×12, 팝업스토어는 건당 총매출이라 ×1). Zekto 이용 여부와 무관한 <b style="color:#fff; font-weight:500;">전체 시장</b> 크기다.</p>
     <p style="margin: 0 0 12px;"><b style="color:#fff; font-weight:500;">② Zekto 유통액(GMV)</b> = ①× <b style="color:#fff; font-weight:500;">Zekto 결제 침투율</b>. 매장의 외국인 고객 전체가 Zekto로 결제하는 게 아니라, 그중 일부만 Zekto 할인권을 통해 결제하기 때문에 이 비율을 곱해야 실제 Zekto 유통액이 나온다.</p>
-    <p style="margin: 0 0 12px;"><b style="color:#fff; font-weight:500;">③ Zekto 예상수익</b> = ②× <b style="color:#fff; font-weight:500;">할인권 판매 수수료율</b>. 예: 10% 할인권을 팔았다면, 전체 외국인 고객이 아니라 <b style="color:#fff; font-weight:500;">Zekto를 통해 실제로 그 할인권을 구매한 고객분의 매출</b>에만 수수료가 발생한다.</p>
+    <p style="margin: 0 0 12px;"><b style="color:#fff; font-weight:500;">③ Zekto 예상수익</b> = ②× <b style="color:#fff; font-weight:500;">위챗 가맹수수료</b>. 예: 10% 할인권을 팔았다면, 전체 외국인 고객이 아니라 <b style="color:#fff; font-weight:500;">Zekto를 통해 실제로 그 할인권을 구매한 고객분의 매출</b>에만 수수료가 발생한다.</p>
     <p style="margin: 0 0 12px;"><b style="color:#fff; font-weight:500;">"현재 시장 규모"</b> 카드는 13개 카테고리 <b style="color:#fff; font-weight:500;">①(전체 외국인매출)</b>의 합계, <b style="color:#fff; font-weight:500;">"Zekto 총 예상수익"</b>은 13개 카테고리의 <b style="color:#fff; font-weight:500;">③</b> 합계다. 지금 필터로 선택 중인 카테고리는 슬라이더 실시간 값을, 나머지 12개는 각 카테고리의 기본 가정값(사전 조사 근거 기반)을 사용해 합산한다.</p>
     <p style="margin: 0;">대형쇼핑몰·백화점·면세점은 내부에 다양한 브랜드·카테고리가 혼재돼 가맹점 단위로 명확히 나눌 수 없어 분석 범위에서 제외했다(1.2 우선순위 판단 참고).</p>
   </div>
@@ -291,7 +291,7 @@
   </div>
   <div style="border-top: 1px solid var(--hair); margin: 1.25rem 0 1.25rem;"></div>
 
-  <p class="helper" style="margin-top:0;">카테고리별 <b style="color: var(--text-primary); font-weight: 500;">Zekto의 예상 수수료 수익</b>(가맹점 매출이나 전체 유통액이 아니라, 할인권 판매 수수료율을 곱한 Zekto 몫만). 기본 가정값 기준</p>
+  <p class="helper" style="margin-top:0;">카테고리별 <b style="color: var(--text-primary); font-weight: 500;">Zekto의 예상 수수료 수익</b>(가맹점 매출이나 전체 유통액이 아니라, 위챗 가맹수수료를 곱한 Zekto 몫만). 기본 가정값 기준</p>
   <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;">Zekto 예상 수수료 수익 (연간, 억원)</div>
   <div id="overviewChart"></div>
 
@@ -313,7 +313,7 @@
     <input type="range" id="penSlider" min="1" max="100" step="1">
   </div>
   <div class="slider-row">
-    <div class="slider-label"><label id="feeLabel">할인권 판매 수수료율</label><span class="val" id="feeOut">-</span></div>
+    <div class="slider-label"><label id="feeLabel">위챗 가맹수수료</label><span class="val" id="feeOut">-</span></div>
     <input type="range" id="feeSlider" min="1" max="11" step="0.5">
   </div>
   <button class="criteria-btn" onclick="openBasisPanel()" style="margin-bottom: 4px;">기준 보기</button>
@@ -632,7 +632,7 @@ function applyPreset(key) {
   document.getElementById('amtLabel').textContent = p.amtLabel;
   amtSlider.min = p.amtMin; amtSlider.max = p.amtMax; amtSlider.step = p.amtStep; amtSlider.value = p.amtDefault;
   penSlider.value = p.penetrationDefault;
-  document.getElementById('feeLabel').textContent = p.feeLabel || '할인권 판매 수수료율';
+  document.getElementById('feeLabel').textContent = p.feeLabel || '위챗 가맹수수료';
   if (p.feeValues) {
     feeSlider.min = 0; feeSlider.max = p.feeValues.length - 1; feeSlider.step = 1;
     let idx = p.feeValues.indexOf(p.feeDefault);
@@ -751,7 +751,7 @@ document.getElementById('downloadBtn').addEventListener('click', function (e) {
       var url = URL.createObjectURL(blob);
       var a = document.createElement('a');
       a.href = url;
-      a.download = 'zekto-bm-simulator.html';
+      a.download = 'wechat-pay-simulator.html';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -762,7 +762,7 @@ document.getElementById('downloadBtn').addEventListener('click', function (e) {
       var url = URL.createObjectURL(blob);
       var a = document.createElement('a');
       a.href = url;
-      a.download = 'zekto-bm-simulator.html';
+      a.download = 'wechat-pay-simulator.html';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
