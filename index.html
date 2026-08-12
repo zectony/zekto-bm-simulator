@@ -143,6 +143,44 @@
   .helper { color: var(--text-secondary); font-size: 13.5px; margin: 0 0 0.9rem; }
 
   footer { margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--hair); font-size: 12px; color: var(--text-muted); }
+
+  #criteriaOverlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+    z-index: 1000; display: flex; align-items: center; justify-content: center;
+    padding: 1.25rem;
+  }
+  #criteriaOverlay.hidden { display: none; }
+  #criteriaPanel {
+    background: var(--panel); border: 1px solid var(--hair-strong);
+    border-radius: 12px; padding: 1.5rem; width: 100%; max-width: 480px;
+    max-height: 80vh; overflow-y: auto;
+  }
+  #criteriaPanelHead {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px; gap: 12px;
+  }
+  #criteriaPanelTitle {
+    font-family: 'Noto Sans KR', sans-serif; font-size: 16px; font-weight: 700; color: #fff; margin: 0;
+  }
+  #criteriaPanelClose {
+    background: none; border: none; color: var(--text-secondary); font-size: 20px;
+    cursor: pointer; line-height: 1; padding: 0 4px;
+  }
+  #criteriaPanelClose:hover { color: #fff; }
+  #criteriaPanelBody { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+  @media (min-width: 768px) {
+    #criteriaOverlay { justify-content: flex-end; padding: 0; background: rgba(0,0,0,0.4); }
+    #criteriaPanel {
+      border-radius: 0; height: 100vh; max-height: 100vh; width: 420px; max-width: 420px;
+      border-left: 1px solid var(--hair-strong); border-top: none; border-right: none; border-bottom: none;
+      animation: slideInRight 0.18s ease-out;
+    }
+    @keyframes slideInRight {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+  }
 </style>
 </head>
 <body>
@@ -156,10 +194,9 @@
 
 <div class="section-head">
   <p class="section-title"><span class="section-index">01</span>시장침투 우선순위</p>
-  <button class="criteria-btn" onclick="toggleCriteria('quadrantCriteria', this)">기준 보기</button>
+  <button class="criteria-btn" onclick="openCriteriaPanel('시장침투 우선순위 · 분류 기준', document.getElementById('quadrantCriteriaSrc').innerHTML)">기준 보기</button>
 </div>
-<div id="quadrantCriteria" class="hidden note panel" style="margin-bottom: 12px;">
-  <b style="color: var(--text-primary); font-weight: 500;">분류 기준</b><br>
+<div id="quadrantCriteriaSrc" style="display:none;">
   · <b style="color: var(--tier-1); font-weight: 500;">1차 진입(저장벽·고수익)</b>: 리테일 마진 20~35%대, 의료법 등 특별 규제 없음, 최고 성장률(+35~191%)<br>
   · <b style="color: var(--tier-2); font-weight: 500;">2차(저장벽·저수익)</b>: 계약은 쉽지만 건당 단가가 낮아(즉석사진 5천원대 등) 수익성 제한적<br>
   · <b style="color: var(--tier-3); font-weight: 500;">3차(중장벽)</b>: 개별 사업자 다수·표준화 어려움(메뉴 다양성), 일부 인허가 필요<br>
@@ -202,7 +239,7 @@
 
 <div class="section-head">
   <p class="section-title"><span class="section-index">02</span>Zekto 예상수익 비교 · 드릴다운</p>
-  <button class="criteria-btn" onclick="toggleOverviewBasis(this)">기준 보기</button>
+  <button class="criteria-btn" onclick="openOverviewBasisPanel()">기준 보기</button>
 </div>
 <div class="panel" style="margin-bottom: 1.75rem;">
   <div class="cards" style="grid-template-columns: repeat(2, 1fr); margin-top: 0;">
@@ -232,8 +269,8 @@
     <div class="slider-label"><label>Zekto 거래수수료율</label><span class="val" id="feeOut">-</span></div>
     <input type="range" id="feeSlider" min="1" max="11" step="0.5">
   </div>
-  <button class="criteria-btn" onclick="toggleCriteria('basisNote', this)" style="margin-bottom: 4px;">기준 보기</button>
-  <p class="note hidden" id="basisNote"></p>
+  <button class="criteria-btn" onclick="openBasisPanel()" style="margin-bottom: 4px;">기준 보기</button>
+  <p style="display:none;" id="basisNote"></p>
 
   <div class="cards" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 0;">
     <div class="card"><p class="label">연환산 유통액</p><p class="value" id="gmvOut">-</p></div>
@@ -254,10 +291,10 @@
 
 <div class="section-head">
   <p class="section-title"><span class="section-index">04</span>의료 카테고리 · 알선 법적 규제</p>
-  <button class="criteria-btn" onclick="toggleCriteria('legalCriteria', this)">기준 보기</button>
+  <button class="criteria-btn" onclick="openCriteriaPanel('의료 카테고리 · 알선 법적 규제', document.getElementById('legalCriteriaSrc').innerHTML)">기준 보기</button>
 </div>
 <p class="helper">쿠폰·선결제 시술권 판매가 왜 카페·식당과 다르게 취급되는지</p>
-<div id="legalCriteria" class="hidden panel" style="margin-bottom: 1.75rem; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
+<div id="legalCriteriaSrc" style="display:none; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
 
 <p style="color: #fff; font-weight: 700; margin: 0 0 8px;">근거 법령 · 처벌</p>
 <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 12.5px;">
@@ -328,6 +365,16 @@
 <footer>
   P1·P2는 순차 진행(게이트 통과 후 다음 단계), P3는 병행 가능. 모든 Pass/Fail 판정은 표본크기·기간·비교 대조군 구성을 함께 기록해 사후 재현 가능하도록 관리한다.
 </footer>
+
+<div id="criteriaOverlay" class="hidden" onclick="if(event.target === this) closeCriteriaPanel();">
+  <div id="criteriaPanel">
+    <div id="criteriaPanelHead">
+      <p id="criteriaPanelTitle">기준</p>
+      <button id="criteriaPanelClose" onclick="closeCriteriaPanel()" aria-label="닫기">&times;</button>
+    </div>
+    <div id="criteriaPanelBody"></div>
+  </div>
+</div>
 
 <script>
 const presets = {
@@ -446,7 +493,6 @@ function computeDefaultRevenue(p) {
   const gmv = p.qtyDefault * p.amtDefault * p.annualMult / 10000;
   return gmv * (p.feeDefault / 100);
 }
-let overviewBasisVisible = false;
 function renderOverview() {
   const activeKey = select ? select.value : null;
   const rows = Object.entries(presets).map(([key, p]) => {
@@ -473,16 +519,13 @@ function renderOverview() {
     const color = groupColors[r.group] || '#8B93A1';
     const nameStyle = r.isActive ? 'color:#fff; font-weight:500;' : 'color:var(--text-secondary);';
     const tag = r.isActive ? ' <span style="color: var(--gold); font-size: 10.5px;">● 드릴다운 중</span>' : '';
-    return '<div style="margin-bottom:14px;">' +
-      '<div style="display:flex; align-items:center; gap:10px; font-size:12.5px; margin-bottom:4px;">' +
+    return '<div style="display:flex; align-items:center; gap:10px; font-size:12.5px; margin-bottom:9px;">' +
         '<span style="width:150px; flex-shrink:0; ' + nameStyle + '">' + r.name + tag + '</span>' +
         '<div style="flex:1; background:rgba(255,255,255,0.10); border-radius:3px; height:14px; position:relative;">' +
           '<div style="background:' + color + '; width:' + pct + '%; height:100%; border-radius:3px;"></div>' +
         '</div>' +
         '<span class="num" style="width:72px; text-align:right; flex-shrink:0; font-weight:500; color:#fff;">' + r.rev.toFixed(1) + '억</span>' +
-      '</div>' +
-      '<div class="ov-basis' + (overviewBasisVisible ? '' : ' hidden') + '" style="padding-left:160px; font-size:11.5px; color:var(--text-muted); line-height:1.5;">' + r.basis + '</div>' +
-    '</div>';
+      '</div>';
   }).join('');
 }
 
@@ -515,17 +558,26 @@ function applyPreset(key) {
   update();
 }
 
-function toggleCriteria(id, btn) {
-  const el = document.getElementById(id);
-  const willShow = el.classList.contains('hidden');
-  el.classList.toggle('hidden');
-  btn.textContent = willShow ? '기준 숨기기' : '기준 보기';
+function openCriteriaPanel(title, html) {
+  document.getElementById('criteriaPanelTitle').textContent = title;
+  document.getElementById('criteriaPanelBody').innerHTML = html;
+  document.getElementById('criteriaOverlay').classList.remove('hidden');
 }
 
-function toggleOverviewBasis(btn) {
-  overviewBasisVisible = !overviewBasisVisible;
-  btn.textContent = overviewBasisVisible ? '기준 숨기기' : '기준 보기';
-  renderOverview();
+function closeCriteriaPanel() {
+  document.getElementById('criteriaOverlay').classList.add('hidden');
+}
+
+function openOverviewBasisPanel() {
+  const html = Object.values(presets).map(p => {
+    return '<div style="margin-bottom: 12px;"><b style="color: #fff; font-weight: 500;">' + p.name + '</b><br>' + p.basis + '</div>';
+  }).join('');
+  openCriteriaPanel('카테고리별 근거', html);
+}
+
+function openBasisPanel() {
+  const p = presets[select.value];
+  openCriteriaPanel(p.name + ' · 근거', p.basis);
 }
 
 function update() {
