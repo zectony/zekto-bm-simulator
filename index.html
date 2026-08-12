@@ -267,18 +267,18 @@
 </div>
 <div class="panel" style="margin-bottom: 1.75rem;">
   <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom: 0.75rem;">
-    <p class="helper" style="margin:0;">13개 카테고리 합계 (대형쇼핑몰·백화점·면세점 제외)</p>
+    <p class="helper" style="margin:0;">14개 카테고리 합계 (대형쇼핑몰·백화점·면세점 제외)</p>
     <button class="criteria-btn" onclick="openCriteriaPanel('시장 규모·총수익 산출 기준', document.getElementById('totalCriteriaSrc').innerHTML)">산출 기준</button>
   </div>
   <div id="totalCriteriaSrc" style="display:none;">
     <p style="margin: 0 0 12px;"><b style="color:#fff; font-weight:500;">① 매장 전체 외국인매출(시장 규모)</b> = 계약 매장수 × 매장당(또는 건당) 매출 × 연간 배수(월매출은 ×12, 팝업스토어는 건당 총매출이라 ×1). Zekto 이용 여부와 무관한 <b style="color:#fff; font-weight:500;">전체 시장</b> 크기다.</p>
     <p style="margin: 0 0 12px;"><b style="color:#fff; font-weight:500;">② Zekto 유통액(GMV)</b> = ①× <b style="color:#fff; font-weight:500;">Zekto 결제 침투율</b>. 매장의 외국인 고객 전체가 Zekto로 결제하는 게 아니라, 그중 일부만 Zekto 할인권을 통해 결제하기 때문에 이 비율을 곱해야 실제 Zekto 유통액이 나온다.</p>
     <p style="margin: 0 0 12px;"><b style="color:#fff; font-weight:500;">③ Zekto 예상수익</b> = ②× <b style="color:#fff; font-weight:500;">할인권 판매 수수료율</b>. 예: 10% 할인권을 팔았다면, 전체 외국인 고객이 아니라 <b style="color:#fff; font-weight:500;">Zekto를 통해 실제로 그 할인권을 구매한 고객분의 매출</b>에만 수수료가 발생한다.</p>
-    <p style="margin: 0 0 12px;">"현재 시장 규모" 카드는 13개 카테고리의 <b style="color:#fff; font-weight:500;">①(전체 외국인매출)</b> 합계, "Zekto 총 예상수익"은 13개 카테고리의 <b style="color:#fff; font-weight:500;">③</b> 합계다. 지금 드릴다운 중인 카테고리는 슬라이더 실시간 값을, 나머지 12개는 각 카테고리의 기본 가정값(사전 조사 근거 기반)을 사용해 합산한다.</p>
+    <p style="margin: 0 0 12px;">"현재 시장 규모" 카드는 14개 카테고리의 <b style="color:#fff; font-weight:500;">①(전체 외국인매출)</b> 합계, "Zekto 총 예상수익"은 14개 카테고리의 <b style="color:#fff; font-weight:500;">③</b> 합계다. 지금 드릴다운 중인 카테고리는 슬라이더 실시간 값을, 나머지 13개는 각 카테고리의 기본 가정값(사전 조사 근거 기반)을 사용해 합산한다.</p>
     <p style="margin: 0;">대형쇼핑몰·백화점·면세점은 내부에 다양한 브랜드·카테고리가 혼재돼 가맹점 단위로 명확히 나눌 수 없어 분석 범위에서 제외했다(1.2 우선순위 판단 참고).</p>
   </div>
   <div class="cards" style="grid-template-columns: repeat(2, 1fr); margin-top: 0;">
-    <div class="card"><p class="label">현재 시장 규모 (13개 카테고리 외국인매출 합계)</p><p class="value" id="totalGmvOut">-</p></div>
+    <div class="card"><p class="label">현재 시장 규모 (14개 카테고리 외국인매출 합계)</p><p class="value" id="totalGmvOut">-</p></div>
     <div class="card"><p class="label">Zekto 총 예상수익 (합계)</p><p class="value" id="totalRevOut">-</p></div>
   </div>
   <div style="border-top: 1px solid var(--hair); margin: 1.25rem 0 1.25rem;"></div>
@@ -302,10 +302,10 @@
   </div>
   <div class="slider-row">
     <div class="slider-label"><label>Zekto 결제 침투율 <span style="color:var(--text-muted); font-weight:400;">(전체 외국인 매출 중 Zekto로 결제하는 비율)</span></label><span class="val" id="penOut">-</span></div>
-    <input type="range" id="penSlider" min="1" max="80" step="1">
+    <input type="range" id="penSlider" min="1" max="100" step="1">
   </div>
   <div class="slider-row">
-    <div class="slider-label"><label>할인권 판매 수수료율</label><span class="val" id="feeOut">-</span></div>
+    <div class="slider-label"><label id="feeLabel">할인권 판매 수수료율</label><span class="val" id="feeOut">-</span></div>
     <input type="range" id="feeSlider" min="1" max="11" step="0.5">
   </div>
   <button class="criteria-btn" onclick="openBasisPanel()" style="margin-bottom: 4px;">기준 보기</button>
@@ -532,12 +532,24 @@ const presets = {
     annualMult: 12, feeDefault: 6,
     penetrationDefault: 15,
     basis: '근거: 서울 공유숙박 신규등록 5개월간 3,428건(2025년 연간의 2배). 유형별(호텔·모텔·게스트하우스) 소비 비중 공식 통계는 없음. 마진율은 공유숙박 특성상 40% 가정.'
+  },
+  wechat: {
+    group: '결제·페이먼트', name: '위챗페이 가맹점 등록대행', marginRate: 90,
+    qtyLabel: '등록 가맹점수', qtyMin: 20, qtyMax: 1000, qtyStep: 10, qtyDefault: 150, qtyUnit: '개',
+    amtLabel: '가맹점당 월 위챗페이 결제액(외국인)', amtMin: 100, amtMax: 5000, amtStep: 10, amtDefault: 800, amtUnit: '만원',
+    annualMult: 12,
+    penetrationDefault: 100,
+    feeLabel: '위챗페이 결제 수수료율',
+    feeValues: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    feeDefault: 0.5,
+    basis: '근거: 카페·식당 등 쿠폰 사업과 별개로, Zekto가 오프라인 가맹점을 직접 영업해 위챗페이 결제 가능 사업자로 등록시켜주는 결제대행 사업. 등록된 가맹점에서 중국인 등 외국인 고객이 위챗페이로 결제하는 금액 전체(=이미 100% Zekto 채널)에 수수료가 붙는다. 원가가 거의 없어 마진율이 매우 높고(90% 가정), 결제대행업 관행상 수수료율은 0.1~1% 구간이 일반적이라 그 구간은 0.1%p 단위, 이후 1%p 단위로 세분화.'
   }
 };
 
 const groupColors = {
   '미용': '#4FD1C5', 'K놀이·즉석사진': '#8B93A1', '외식': '#E0A63A',
-  '숙박': '#E0A63A', '유통·리테일': '#E2604F', '의료': '#E2604F'
+  '숙박': '#E0A63A', '유통·리테일': '#E2604F', '의료': '#E2604F',
+  '결제·페이먼트': '#4FD1C5'
 };
 function computeDefaultMarket(p) {
   return p.qtyDefault * p.amtDefault * p.annualMult / 10000;
@@ -552,7 +564,7 @@ function renderOverview() {
   const rows = Object.entries(presets).map(([key, p]) => {
     let rev, market;
     if (key === activeKey && qtySlider.value !== '') {
-      const qty = Number(qtySlider.value), amt = Number(amtSlider.value), pen = Number(penSlider.value), fee = Number(feeSlider.value);
+      const qty = Number(qtySlider.value), amt = Number(amtSlider.value), pen = Number(penSlider.value), fee = getCurrentFee(p);
       market = qty * amt * p.annualMult / 10000;
       const zektoGmv = market * (pen / 100);
       rev = zektoGmv * (fee / 100);
@@ -585,7 +597,7 @@ function renderOverview() {
 }
 
 const select = document.getElementById('categorySelect');
-const groupsOrder = ['의료', '미용', '외식', 'K놀이·즉석사진', '유통·리테일', '숙박'];
+const groupsOrder = ['의료', '미용', '외식', 'K놀이·즉석사진', '유통·리테일', '숙박', '결제·페이먼트'];
 groupsOrder.forEach(g => {
   const optgroup = document.createElement('optgroup');
   optgroup.label = g;
@@ -610,9 +622,22 @@ function applyPreset(key) {
   document.getElementById('amtLabel').textContent = p.amtLabel;
   amtSlider.min = p.amtMin; amtSlider.max = p.amtMax; amtSlider.step = p.amtStep; amtSlider.value = p.amtDefault;
   penSlider.value = p.penetrationDefault;
-  feeSlider.value = p.feeDefault;
+  document.getElementById('feeLabel').textContent = p.feeLabel || '할인권 판매 수수료율';
+  if (p.feeValues) {
+    feeSlider.min = 0; feeSlider.max = p.feeValues.length - 1; feeSlider.step = 1;
+    let idx = p.feeValues.indexOf(p.feeDefault);
+    feeSlider.value = idx === -1 ? 0 : idx;
+  } else {
+    feeSlider.min = 1; feeSlider.max = 11; feeSlider.step = 0.5;
+    feeSlider.value = p.feeDefault;
+  }
   document.getElementById('basisNote').textContent = p.basis;
   update();
+}
+
+function getCurrentFee(p) {
+  if (p.feeValues) return p.feeValues[Number(feeSlider.value)];
+  return Number(feeSlider.value);
 }
 
 function openCriteriaPanel(title, html) {
@@ -643,12 +668,12 @@ function update() {
   const qty = Number(qtySlider.value);
   const amt = Number(amtSlider.value);
   const pen = Number(penSlider.value);
-  const fee = Number(feeSlider.value);
+  const fee = getCurrentFee(p);
 
   document.getElementById('qtyOut').textContent = fmt(qty) + p.qtyUnit;
   document.getElementById('amtOut').textContent = fmt(amt) + p.amtUnit;
   document.getElementById('penOut').textContent = pen + '%';
-  document.getElementById('feeOut').textContent = fee + '%';
+  document.getElementById('feeOut').textContent = (fee < 1 ? fee.toFixed(1) : fee) + '%';
 
   const marketEok = (qty * amt * p.annualMult) / 10000;
   const zektoGmvEok = marketEok * (pen / 100);
@@ -684,7 +709,7 @@ function renderPortfolio() {
 function categoryRevenue(key) {
   const p = presets[key];
   if (key === select.value) {
-    const qty = Number(qtySlider.value), amt = Number(amtSlider.value), pen = Number(penSlider.value), fee = Number(feeSlider.value);
+    const qty = Number(qtySlider.value), amt = Number(amtSlider.value), pen = Number(penSlider.value), fee = getCurrentFee(p);
     const market = qty * amt * p.annualMult / 10000;
     const zektoGmv = market * (pen / 100);
     return zektoGmv * (fee / 100);
