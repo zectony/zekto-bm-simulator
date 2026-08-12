@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Zekto · BM 사업성 검토</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0e1015;
+    --panel: #161922;
+    --panel-2: #1c2029;
+    --hair: rgba(255,255,255,0.08);
+    --hair-strong: rgba(255,255,255,0.14);
+    --text-primary: #ECEDEE;
+    --text-secondary: #9BA0AC;
+    --text-muted: #656b78;
+    --gold: #C9A227;
+    --gold-dim: rgba(201,162,39,0.16);
+    --tier-1: #4FD1C5;
+    --tier-2: #8B93A1;
+    --tier-3: #E0A63A;
+    --tier-4: #E2604F;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, "Malgun Gothic", sans-serif;
+    background: var(--ink);
+    color: var(--text-primary);
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 1.5rem 5rem;
+    line-height: 1.65;
+  }
+  .num { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; }
+
+  header {
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--hair);
+    margin-bottom: 2.25rem;
+  }
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; margin: 0 0 0.9rem;
+  }
+  h1 {
+    font-family: 'Fraunces', serif; font-weight: 500; font-size: 32px;
+    letter-spacing: -0.01em; margin: 0 0 0.6rem; color: #fff;
+  }
+  p.sub { color: var(--text-secondary); font-size: 14.5px; margin: 0; max-width: 520px; }
+
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin: 2.75rem 0 1rem; gap: 12px;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif; font-size: 18px; font-weight: 500; color: #fff; margin: 0;
+  }
+  .section-index {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gold);
+    letter-spacing: 0.08em; margin-right: 8px;
+  }
+
+  .panel {
+    background: var(--panel); border: 1px solid var(--hair); border-radius: 10px;
+    padding: 1.25rem 1.4rem;
+  }
+
+  select {
+    width: 100%; height: 42px; border-radius: 8px; border: 1px solid var(--hair-strong);
+    background: var(--panel); padding: 0 12px; font-size: 14px; color: var(--text-primary);
+    margin-bottom: 1.75rem; font-family: inherit;
+  }
+  select:focus { outline: none; border-color: var(--gold); }
+  optgroup { color: var(--text-muted); }
+
+  .slider-row { margin-bottom: 20px; }
+  .slider-label { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; }
+  .slider-label span.val { font-family: 'IBM Plex Mono', monospace; font-weight: 500; color: var(--text-primary); font-size: 13.5px; }
+  input[type=range] {
+    width: 100%; height: 2px; -webkit-appearance: none; background: var(--hair-strong); border-radius: 2px;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--gold); cursor: pointer; border: 2px solid var(--ink);
+    box-shadow: 0 0 0 1px var(--hair-strong);
+  }
+  input[type=range]::-moz-range-thumb {
+    width: 16px; height: 16px; border-radius: 50%; background: var(--gold); cursor: pointer; border: 2px solid var(--ink);
+  }
+
+  .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 1.5rem 0; }
+  .card {
+    background: var(--panel); border: 1px solid var(--hair); border-radius: 10px; padding: 1.1rem 1.2rem;
+  }
+  .card p.label {
+    font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-muted); margin: 0 0 8px; font-weight: 500;
+  }
+  .card p.value {
+    font-family: 'IBM Plex Mono', monospace; font-size: 24px; font-weight: 500; margin: 0; color: #fff;
+  }
+
+  .plan-item {
+    background: var(--panel); border: 1px solid var(--hair); border-radius: 10px;
+    padding: 14px 16px; margin-bottom: 10px; font-size: 13px;
+  }
+  .plan-item-head { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; }
+  .plan-item .tag {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 500;
+    padding: 3px 8px; border-radius: 4px; letter-spacing: 0.04em;
+  }
+  .plan-item .name { flex: 1; font-weight: 500; color: #fff; }
+  .plan-item .dur { color: var(--text-muted); font-size: 12px; font-family: 'IBM Plex Mono', monospace; }
+  .plan-item .criteria { color: var(--text-secondary); font-size: 12.5px; padding-left: 2px; line-height: 1.55; }
+  .plan-item .criteria b { color: var(--text-primary); font-weight: 500; }
+  .gate {
+    text-align: center; font-size: 11.5px; color: var(--text-muted); margin: 10px 0;
+    letter-spacing: 0.02em;
+  }
+  .gate::before, .gate::after { content: '—'; margin: 0 8px; opacity: 0.4; }
+
+  .tag-p1 { background: rgba(226,96,79,0.15); color: #ec8f80; }
+  .tag-p2 { background: rgba(224,166,58,0.15); color: #e0a63a; }
+  .tag-p3 { background: rgba(255,255,255,0.08); color: var(--text-secondary); }
+
+  .note { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; line-height: 1.6; }
+  .hidden { display: none; }
+  .criteria-btn {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.03em;
+    color: var(--gold); background: var(--gold-dim);
+    border: 1px solid rgba(201,162,39,0.3); border-radius: 6px; padding: 5px 11px; cursor: pointer;
+    white-space: nowrap;
+  }
+  .criteria-btn:hover { background: rgba(201,162,39,0.26); }
+
+  .helper { color: var(--text-secondary); font-size: 13.5px; margin: 0 0 0.9rem; }
+
+  footer { margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--hair); font-size: 12px; color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">Zekto · Market Entry Feasibility</p>
+  <h1>BM 사업성 검토</h1>
+  <p class="sub">카테고리별 시장침투 우선순위와 민감도 시뮬레이터. 가정을 조정하며 여러 카테고리를 조합해 합산 수익을 확인합니다.</p>
+</header>
+
+<div class="section-head">
+  <p class="section-title"><span class="section-index">01</span>시장침투 우선순위</p>
+  <button class="criteria-btn" onclick="toggleCriteria('quadrantCriteria', this)">기준 보기</button>
+</div>
+<div id="quadrantCriteria" class="hidden note panel" style="margin-bottom: 12px;">
+  <b style="color: var(--text-primary); font-weight: 500;">분류 기준</b><br>
+  · <b style="color: var(--tier-1); font-weight: 500;">1차 진입(저장벽·고수익)</b>: 리테일 마진 20~35%대, 의료법 등 특별 규제 없음, 최고 성장률(+35~191%)<br>
+  · <b style="color: var(--tier-2); font-weight: 500;">2차(저장벽·저수익)</b>: 계약은 쉽지만 건당 단가가 낮아(즉석사진 5천원대 등) 수익성 제한적<br>
+  · <b style="color: var(--tier-3); font-weight: 500;">3차(중장벽)</b>: 개별 사업자 다수·표준화 어려움(메뉴 다양성), 일부 인허가 필요<br>
+  · <b style="color: var(--tier-4); font-weight: 500;">장기과제(고장벽)</b>: 의료법상 환자 유인·알선 규제, 유치업자 등록 의무, 시술 안전·책임 소재 문제(의료 3종). 편의점은 본사 협상이 필요해 별도 분류
+</div>
+<div class="panel">
+  <svg viewBox="0 0 640 400" width="100%" role="img" aria-label="카테고리별 진입장벽과 수익성 산점도">
+    <line x1="60" y1="20" x2="60" y2="360" stroke="rgba(255,255,255,0.16)" stroke-width="1"/>
+    <line x1="60" y1="360" x2="600" y2="360" stroke="rgba(255,255,255,0.16)" stroke-width="1"/>
+    <text x="330" y="392" text-anchor="middle" font-size="12" fill="#656b78">진입장벽 (낮음 → 높음)</text>
+    <text x="20" y="190" text-anchor="middle" font-size="12" fill="#656b78" transform="rotate(-90 20 190)">수익성 (낮음 → 높음)</text>
+    <g fill="#4FD1C5">
+      <circle cx="222" cy="152" r="9"/><text x="222" y="140" text-anchor="middle" font-size="11" fill="#ECEDEE">미용 로드샵</text>
+      <circle cx="204" cy="176" r="9"/><text x="204" y="200" text-anchor="middle" font-size="11" fill="#ECEDEE">팝업스토어·굿즈</text>
+    </g>
+    <g fill="#8B93A1">
+      <circle cx="168" cy="258" r="9"/><text x="168" y="246" text-anchor="middle" font-size="11" fill="#ECEDEE">즉석사진</text>
+      <circle cx="168" cy="272" r="9"/><text x="168" y="296" text-anchor="middle" font-size="11" fill="#ECEDEE">K놀이</text>
+      <circle cx="186" cy="286" r="9"/><text x="230" y="290" text-anchor="middle" font-size="11" fill="#ECEDEE">네일숍</text>
+    </g>
+    <g fill="#E0A63A">
+      <circle cx="318" cy="216" r="9"/><text x="318" y="204" text-anchor="middle" font-size="11" fill="#ECEDEE">카페</text>
+      <circle cx="342" cy="192" r="9"/><text x="342" y="230" text-anchor="middle" font-size="11" fill="#ECEDEE">일반식당</text>
+      <circle cx="330" cy="176" r="9"/><text x="380" y="176" text-anchor="middle" font-size="11" fill="#ECEDEE">숙박</text>
+    </g>
+    <g fill="#E2604F">
+      <circle cx="438" cy="176" r="9"/><text x="490" y="176" text-anchor="middle" font-size="11" fill="#ECEDEE">편의점</text>
+      <circle cx="492" cy="56" r="9"/><text x="492" y="44" text-anchor="middle" font-size="11" fill="#ECEDEE">피부과</text>
+      <circle cx="546" cy="38" r="9"/><text x="546" y="26" text-anchor="middle" font-size="11" fill="#ECEDEE">성형외과</text>
+      <circle cx="474" cy="86" r="9"/><text x="440" y="98" text-anchor="middle" font-size="11" fill="#ECEDEE">내과</text>
+    </g>
+  </svg>
+  <div style="display:flex; flex-wrap:wrap; gap:16px; font-size:12px; color:var(--text-secondary); margin-top:10px; padding-top:12px; border-top:1px solid var(--hair);">
+    <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#4FD1C5;margin-right:5px;"></span>1차 진입</span>
+    <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#8B93A1;margin-right:5px;"></span>2차</span>
+    <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#E0A63A;margin-right:5px;"></span>3차</span>
+    <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#E2604F;margin-right:5px;"></span>장기과제</span>
+  </div>
+</div>
+
+<div class="section-head">
+  <p class="section-title"><span class="section-index">02</span>그룹별 예상수익 비교</p>
+  <button class="criteria-btn" onclick="toggleCriteria('overviewCriteria', this)">기준 보기</button>
+</div>
+<p class="helper">각 카테고리의 기본 가정값 기준 연간 예상수익</p>
+<div id="overviewChart" class="panel" style="margin-bottom: 12px;"></div>
+<div id="overviewCriteria" class="hidden" style="margin-bottom: 1.75rem;"></div>
+
+<div class="section-head">
+  <p class="section-title"><span class="section-index">03</span>카테고리 드릴다운</p>
+</div>
+<p class="helper">그룹(대분류) 또는 세부 카테고리를 선택해 가정값을 직접 조정하세요</p>
+<select id="categorySelect"></select>
+
+<div class="slider-row">
+  <div class="slider-label"><label id="qtyLabel">계약 매장수</label><span class="val" id="qtyOut">-</span></div>
+  <input type="range" id="qtySlider">
+</div>
+<div class="slider-row">
+  <div class="slider-label"><label id="amtLabel">매장당 월매출</label><span class="val" id="amtOut">-</span></div>
+  <input type="range" id="amtSlider">
+</div>
+<div class="slider-row">
+  <div class="slider-label"><label>Zekto 거래수수료율</label><span class="val" id="feeOut">-</span></div>
+  <input type="range" id="feeSlider" min="1" max="11" step="0.5">
+</div>
+<button class="criteria-btn" onclick="toggleCriteria('basisNote', this)" style="margin-bottom: 4px;">기준 보기</button>
+<p class="note hidden" id="basisNote"></p>
+
+<div class="cards" style="grid-template-columns: repeat(3, 1fr);">
+  <div class="card"><p class="label">연환산 유통액</p><p class="value" id="gmvOut">-</p></div>
+  <div class="card"><p class="label">Zekto 예상수익</p><p class="value" id="revenueOut">-</p></div>
+  <div class="card"><p class="label">평균 마진율(1개당)</p><p class="value" id="marginOut">-</p></div>
+</div>
+
+<div class="section-head">
+  <p class="section-title"><span class="section-index">04</span>포트폴리오 합산</p>
+</div>
+<p class="helper">Zekto는 단일 카테고리가 아니라 여러 카테고리를 조합해 수익화합니다. 체크한 카테고리 중 현재 드릴다운 중인 항목은 슬라이더 값을, 나머지는 기본 가정값을 사용해 합산합니다.</p>
+<div id="portfolioList" class="panel" style="margin-bottom: 12px;"></div>
+<div class="cards">
+  <div class="card"><p class="label">선택 카테고리 수</p><p class="value" id="portfolioCount">0개</p></div>
+  <div class="card"><p class="label">합산 예상수익</p><p class="value" id="portfolioRevenue">0억원</p></div>
+</div>
+
+<div class="section-head">
+  <p class="section-title"><span class="section-index">05</span>오프라인 검증 계획</p>
+</div>
+<p class="helper">우선순위·기간·성공기준(공통)</p>
+
+<div class="plan-item">
+  <div class="plan-item-head"><span class="tag tag-p1">P1</span><span class="name">가맹점 수 실측 (3대 상권: 강남·중구·마포)</span><span class="dur">2주</span></div>
+  <div class="criteria"><b>Pass 기준:</b> 실측 매장수가 시뮬레이터 가정치의 ±30% 이내. 벗어나면 슬라이더 기본값을 실측치로 교체 후 재계산</div>
+</div>
+<div class="plan-item">
+  <div class="plan-item-head"><span class="tag tag-p1">P1</span><span class="name">매출·참여의향 인터뷰 (10~20곳)</span><span class="dur">3주</span></div>
+  <div class="criteria"><b>Pass 기준:</b> 응답 매장의 70% 이상이 선불판매·할인쿠폰 참여 의향 표명 + 매장당 월매출 응답으로 95% 신뢰구간 산출 가능한 표본 확보</div>
+</div>
+
+<div class="gate">P1 두 항목 모두 Pass → P2 진행</div>
+
+<div class="plan-item">
+  <div class="plan-item-head"><span class="tag tag-p2">P2</span><span class="name">소규모 파일럿 RCT (5~10개 매장)</span><span class="dur">6주</span></div>
+  <div class="criteria"><b>Pass 기준(검증방법론 문서 5장 기준):</b> 증분마진 95% 신뢰구간 하한 &gt; 0, 마진 ROI(증분마진÷할인비용) 1.2배 이상. 표본 부족 시 Conditional Pass로 표본 확대 후 재판정</div>
+</div>
+<div class="plan-item">
+  <div class="plan-item-head"><span class="tag tag-p2">P2</span><span class="name">이벤트·파트너십 테스트 (팝업 1~2건)</span><span class="dur">4주</span></div>
+  <div class="criteria"><b>Pass 기준:</b> 파트너십 계약 전환율 20% 이상(제안 대비 실제 계약), 종료 후 재계약·후속 팝업 문의 1건 이상</div>
+</div>
+
+<div class="gate">P2 Pass → 카테고리 확정 및 정식 계약 전환</div>
+
+<div class="plan-item">
+  <div class="plan-item-head"><span class="tag tag-p3">P3</span><span class="name">경쟁사(NOL World 등) 벤치마크</span><span class="dur">2주</span></div>
+  <div class="criteria"><b>Pass 기준:</b> Zekto 가정 수수료율(6~8%)이 시장 평균 대비 ±3%p 이내 — 벗어나면 수수료율 슬라이더 기본값 재설정</div>
+</div>
+
+<footer>
+  P1·P2는 순차 진행(게이트 통과 후 다음 단계), P3는 병행 가능. 모든 Pass/Fail 판정은 표본크기·기간·비교 대조군 구성을 함께 기록해 사후 재현 가능하도록 관리한다.
+</footer>
+
+<script>
+const presets = {
+  cosmetics: {
+    group: '미용', name: '화장품 로드샵(올리브영형)', marginRate: 25,
+    qtyLabel: '계약 매장수', qtyMin: 50, qtyMax: 500, qtyStep: 10, qtyDefault: 150, qtyUnit: '개',
+    amtLabel: '매장당 월매출', amtMin: 500, amtMax: 5000, amtStep: 100, amtDefault: 2200, amtUnit: '만원',
+    annualMult: 12, feeDefault: 6,
+    basis: '근거: 화장품 결제 +35% 성장(2025). 올리브영 세일기간 외국인 방문 3년간 11배↑. 매장수는 검증 전 가정치. 마진율은 H&B 리테일 평균 25% 가정.'
+  },
+  pharmacy: {
+    group: '미용', name: '약국(뷰티·건강기능성)', marginRate: 30,
+    qtyLabel: '계약 약국수', qtyMin: 50, qtyMax: 500, qtyStep: 10, qtyDefault: 120, qtyUnit: '개',
+    amtLabel: '약국당 월매출', amtMin: 300, amtMax: 3000, amtStep: 100, amtDefault: 1200, amtUnit: '만원',
+    annualMult: 12, feeDefault: 6,
+    basis: '근거: 약국 결제 +67% 성장(전체 미용 세부품목 중 최고). 대만+342%·리투아니아+304% 등 국가별 급증. 피부·영양관리 웰니스 제품 구매 중심. 마진율은 뷰티기능성 제품 기준 30% 가정.'
+  },
+  healthfood: {
+    group: '미용', name: '건강식품(홍삼·인삼 등)', marginRate: 28,
+    qtyLabel: '계약 매장수', qtyMin: 30, qtyMax: 400, qtyStep: 10, qtyDefault: 100, qtyUnit: '개',
+    amtLabel: '매장당 월매출', amtMin: 300, amtMax: 3000, amtStep: 100, amtDefault: 1000, amtUnit: '만원',
+    annualMult: 12, feeDefault: 6,
+    basis: '근거: 건강식품 결제 +75.1% 성장 — K뷰티·헬스 세부품목 중 최고 성장률. 홍삼·인삼 중심. 마진율 28% 가정(원물 원가 비중 고려).'
+  },
+  nail: {
+    group: '미용', name: '네일숍', marginRate: 40,
+    qtyLabel: '계약 매장수', qtyMin: 50, qtyMax: 500, qtyStep: 10, qtyDefault: 200, qtyUnit: '개',
+    amtLabel: '매장당 월매출', amtMin: 300, amtMax: 2000, amtStep: 100, amtDefault: 700, amtUnit: '만원',
+    annualMult: 12, feeDefault: 8,
+    basis: '근거: 외국인 이용건수 +17% 성장. 매장수·매출 모두 가정치, 별도 검증 필요. 마진율은 인건비 중심 서비스업 특성상 40% 가정.'
+  },
+  derma: {
+    group: '의료', name: '피부과', marginRate: 55,
+    qtyLabel: '계약 병원수', qtyMin: 5, qtyMax: 100, qtyStep: 5, qtyDefault: 20, qtyUnit: '개',
+    amtLabel: '병원당 월매출(외국인분)', amtMin: 2000, amtMax: 20000, amtStep: 1000, amtDefault: 8000, amtUnit: '만원',
+    annualMult: 12, feeDefault: 3,
+    basis: '근거: 외국인 환자 진료과목 56.6%(최대), 서비스업 해외카드매출의 40%. 수수료율은 의료법 규제 고려해 3%로 낮게 가정. 계약구조 복잡 · 장기과제로 분류. 마진율은 의료서비스 특성상 55% 가정.'
+  },
+  plastic: {
+    group: '의료', name: '성형외과', marginRate: 50,
+    qtyLabel: '계약 병원수', qtyMin: 5, qtyMax: 50, qtyStep: 5, qtyDefault: 10, qtyUnit: '개',
+    amtLabel: '병원당 월매출(외국인분)', amtMin: 3000, amtMax: 30000, amtStep: 1000, amtDefault: 12000, amtUnit: '만원',
+    annualMult: 12, feeDefault: 3,
+    basis: '근거: 진료과목 11.4%, 서비스업 해외카드매출의 14%. 대만+55%·중국+25% 이용건수 증가. 장기과제(고장벽) 카테고리. 마진율 50% 가정(재료·장비 비용 반영).'
+  },
+  internal: {
+    group: '의료', name: '내과(통합, 건강검진 등)', marginRate: 35,
+    qtyLabel: '계약 병원수', qtyMin: 5, qtyMax: 80, qtyStep: 5, qtyDefault: 15, qtyUnit: '개',
+    amtLabel: '병원당 월매출(외국인분)', amtMin: 1500, amtMax: 15000, amtStep: 500, amtDefault: 5000, amtUnit: '만원',
+    annualMult: 12, feeDefault: 3,
+    basis: '근거: 진료과목 10.0%(피부과·성형외과 다음). 건강검진 패키지 등 의료관광 상품과 연계 가능하나 역시 고장벽. 마진율 35% 가정(검진 장비·인력 비용 반영).'
+  },
+  cafe: {
+    group: '외식', name: '카페', marginRate: 65,
+    qtyLabel: '계약 카페수', qtyMin: 50, qtyMax: 1000, qtyStep: 50, qtyDefault: 300, qtyUnit: '개',
+    amtLabel: '카페당 월매출(외국인분)', amtMin: 300, amtMax: 3000, amtStep: 100, amtDefault: 900, amtUnit: '만원',
+    annualMult: 12, feeDefault: 8,
+    basis: '근거: 서울 외식업 5,843억원(+54.5%)에 포함되나 카페 단독 비중 공식 통계 없음. 일부 매장 고객 6명 중 1명이 외국인이라는 사례만 확인 — 가정치 신뢰도 낮음. 마진율은 음료 원가 비중 낮아 65% 가정.'
+  },
+  restaurant: {
+    group: '외식', name: '일반식당(한식 등)', marginRate: 25,
+    qtyLabel: '계약 식당수', qtyMin: 50, qtyMax: 1000, qtyStep: 50, qtyDefault: 300, qtyUnit: '개',
+    amtLabel: '식당당 월매출(외국인분)', amtMin: 500, amtMax: 5000, amtStep: 100, amtDefault: 1500, amtUnit: '만원',
+    annualMult: 12, feeDefault: 8,
+    basis: '근거: 서울 외식업 5,843억원(+54.5%)에 포함, 카페와 분리된 공식 비중 없음. 편의점 K푸드 결제 1,300만건(연평균+34%)이 참고 지표. 마진율은 식자재 원가 비중 높아 25% 가정.'
+  },
+  photo: {
+    group: 'K놀이·즉석사진', name: '즉석사진 (인생네컷·포토이즘 등)', marginRate: 75,
+    qtyLabel: '계약 매장수', qtyMin: 50, qtyMax: 1065, qtyStep: 10, qtyDefault: 160, qtyUnit: '개',
+    amtLabel: '매장당 월매출', amtMin: 300, amtMax: 2500, amtStep: 50, amtDefault: 740, amtUnit: '만원',
+    annualMult: 12, feeDefault: 8,
+    basis: '근거: 공정위 공시 가맹점수 1,065개(4개 브랜드 합). 매장당 매출은 브랜드별 연매출(8,880만~2.3억원) 환산치. 신뢰도가 가장 높은 카테고리. 마진율은 인화지·잉크 원가만 발생해 75% 가정(단, 가맹비·임대료 등 고정비는 별도).'
+  },
+  pcbang: {
+    group: 'K놀이·즉석사진', name: 'PC방', marginRate: 20,
+    qtyLabel: '계약 매장수', qtyMin: 50, qtyMax: 800, qtyStep: 50, qtyDefault: 200, qtyUnit: '개',
+    amtLabel: '매장당 월매출', amtMin: 300, amtMax: 3000, amtStep: 100, amtDefault: 800, amtUnit: '만원',
+    annualMult: 12, feeDefault: 8,
+    basis: '근거: 외국인 이용건수 +36%(4개국 관광객 기준). 전국 가맹점 수 공식 통계 없어 표본 추정. 마진율은 전기료·라이선스 비용 반영해 20% 가정(F&B 부가매출 제외).'
+  },
+  karaoke: {
+    group: 'K놀이·즉석사진', name: '노래방', marginRate: 30,
+    qtyLabel: '계약 매장수', qtyMin: 50, qtyMax: 800, qtyStep: 50, qtyDefault: 150, qtyUnit: '개',
+    amtLabel: '매장당 월매출', amtMin: 300, amtMax: 2500, amtStep: 100, amtDefault: 700, amtUnit: '만원',
+    annualMult: 12, feeDefault: 8,
+    basis: '근거: 외국인 이용건수 +18%. PC방과 함께 "K놀이" 카테고리로 한국관광공사가 분류(전체 K놀이 +35.8% 성장). 마진율 30% 가정.'
+  },
+  popup: {
+    group: '유통·리테일', name: '팝업스토어·굿즈', marginRate: 35,
+    qtyLabel: '연간 팝업 파트너십 건수', qtyMin: 10, qtyMax: 100, qtyStep: 5, qtyDefault: 40, qtyUnit: '건',
+    amtLabel: '건당 총매출', amtMin: 1000, amtMax: 10000, amtStep: 500, amtDefault: 3000, amtUnit: '만원',
+    annualMult: 1, feeDefault: 6,
+    basis: '근거: 장난감·오락기기(팝업굿즈) +191.4%로 전체 카테고리 중 최고 성장. 이벤트성이라 "월매출"이 아닌 "건당 총매출"로 계산. 마진율은 라이선스 굿즈 특성상 35% 가정.'
+  },
+  cvs: {
+    group: '유통·리테일', name: '편의점', marginRate: 15,
+    qtyLabel: '계약 매장수', qtyMin: 100, qtyMax: 2000, qtyStep: 100, qtyDefault: 500, qtyUnit: '개',
+    amtLabel: '매장당 월매출(외국인분)', amtMin: 500, amtMax: 3000, amtStep: 100, amtDefault: 1200, amtUnit: '만원',
+    annualMult: 12, feeDefault: 4,
+    basis: '근거: CU·GS25 등 결제 +50~86% 성장하나 이미 본사 차원의 자체 프로모션 보유. 개별계약 아닌 본사 협상 필요해 고장벽으로 분류, 수수료율도 낮게 가정. 마진율은 유통 리테일 특성상 15%로 가장 낮게 가정.'
+  },
+  stay: {
+    group: '숙박', name: '숙박(게스트하우스·공유숙박)', marginRate: 40,
+    qtyLabel: '계약 숙소수', qtyMin: 50, qtyMax: 1000, qtyStep: 50, qtyDefault: 300, qtyUnit: '개',
+    amtLabel: '숙소당 월매출', amtMin: 300, amtMax: 3000, amtStep: 100, amtDefault: 1000, amtUnit: '만원',
+    annualMult: 12, feeDefault: 6,
+    basis: '근거: 서울 공유숙박 신규등록 5개월간 3,428건(2025년 연간의 2배). 유형별(호텔·모텔·게스트하우스) 소비 비중 공식 통계는 없음. 마진율은 공유숙박 특성상 40% 가정.'
+  }
+};
+
+const groupColors = {
+  '미용': '#4FD1C5', 'K놀이·즉석사진': '#8B93A1', '외식': '#E0A63A',
+  '숙박': '#E0A63A', '유통·리테일': '#E2604F', '의료': '#E2604F'
+};
+function computeDefaultRevenue(p) {
+  const gmv = p.qtyDefault * p.amtDefault * p.annualMult / 10000;
+  return gmv * (p.feeDefault / 100);
+}
+function renderOverview() {
+  const rows = Object.entries(presets).map(([key, p]) => ({ key, name: p.name, group: p.group, rev: computeDefaultRevenue(p) }));
+  rows.sort((a, b) => b.rev - a.rev);
+  const maxRev = Math.max(...rows.map(r => r.rev));
+  const container = document.getElementById('overviewChart');
+  container.innerHTML = rows.map(r => {
+    const pct = Math.max(4, (r.rev / maxRev) * 100);
+    const color = groupColors[r.group] || '#8B93A1';
+    return '<div style="display:flex; align-items:center; gap:10px; margin-bottom:9px; font-size:12.5px;">' +
+      '<span style="width:150px; flex-shrink:0; color:var(--text-secondary);">' + r.name + '</span>' +
+      '<div style="flex:1; background:rgba(255,255,255,0.06); border-radius:3px; height:14px; position:relative;">' +
+        '<div style="background:' + color + '; width:' + pct + '%; height:100%; border-radius:3px;"></div>' +
+      '</div>' +
+      '<span class="num" style="width:72px; text-align:right; flex-shrink:0; font-weight:500; color:#fff;">' + r.rev.toFixed(1) + '억</span>' +
+    '</div>';
+  }).join('');
+}
+
+const select = document.getElementById('categorySelect');
+const groupsOrder = ['의료', '미용', '외식', 'K놀이·즉석사진', '유통·리테일', '숙박'];
+groupsOrder.forEach(g => {
+  const optgroup = document.createElement('optgroup');
+  optgroup.label = g;
+  Object.entries(presets).filter(([, p]) => p.group === g).forEach(([key, p]) => {
+    const opt = document.createElement('option');
+    opt.value = key; opt.textContent = p.name;
+    optgroup.appendChild(opt);
+  });
+  select.appendChild(optgroup);
+});
+
+const qtySlider = document.getElementById('qtySlider');
+const amtSlider = document.getElementById('amtSlider');
+const feeSlider = document.getElementById('feeSlider');
+function fmt(n) { return Math.round(n).toLocaleString('ko-KR'); }
+
+function applyPreset(key) {
+  const p = presets[key];
+  document.getElementById('qtyLabel').textContent = p.qtyLabel;
+  qtySlider.min = p.qtyMin; qtySlider.max = p.qtyMax; qtySlider.step = p.qtyStep; qtySlider.value = p.qtyDefault;
+  document.getElementById('amtLabel').textContent = p.amtLabel;
+  amtSlider.min = p.amtMin; amtSlider.max = p.amtMax; amtSlider.step = p.amtStep; amtSlider.value = p.amtDefault;
+  feeSlider.value = p.feeDefault;
+  document.getElementById('basisNote').textContent = p.basis;
+  update();
+}
+
+function toggleCriteria(id, btn) {
+  const el = document.getElementById(id);
+  const willShow = el.classList.contains('hidden');
+  el.classList.toggle('hidden');
+  btn.textContent = willShow ? '기준 숨기기' : '기준 보기';
+}
+
+function renderOverviewCriteria() {
+  const el = document.getElementById('overviewCriteria');
+  el.innerHTML = Object.entries(presets).map(([key, p]) => {
+    return '<div class="panel" style="margin-bottom: 8px; font-size: 12.5px; color: var(--text-secondary); line-height: 1.55;">' +
+      '<b style="color: #fff; font-weight: 500;">' + p.name + '</b> — ' + p.basis +
+    '</div>';
+  }).join('');
+}
+
+function update() {
+  const key = select.value;
+  const p = presets[key];
+  const qty = Number(qtySlider.value);
+  const amt = Number(amtSlider.value);
+  const fee = Number(feeSlider.value);
+
+  document.getElementById('qtyOut').textContent = fmt(qty) + p.qtyUnit;
+  document.getElementById('amtOut').textContent = fmt(amt) + p.amtUnit;
+  document.getElementById('feeOut').textContent = fee + '%';
+
+  const gmvManwon = qty * amt * p.annualMult;
+  const gmvEok = gmvManwon / 10000;
+  const revenueEok = gmvEok * (fee / 100);
+
+  document.getElementById('gmvOut').textContent = fmt(gmvEok) + '억원';
+  document.getElementById('revenueOut').textContent = revenueEok.toFixed(1) + '억원';
+  document.getElementById('marginOut').textContent = p.marginRate + '%';
+
+  updatePortfolio();
+}
+
+const checkedCategories = new Set();
+function renderPortfolio() {
+  const container = document.getElementById('portfolioList');
+  container.innerHTML = Object.entries(presets).map(([key, p]) => {
+    return '<label style="display:flex; align-items:center; gap:10px; padding:7px 4px; font-size:13px; cursor:pointer;">' +
+      '<input type="checkbox" class="portfolioCheck" data-key="' + key + '" style="width:16px;height:16px; accent-color: var(--gold);">' +
+      '<span>' + p.name + ' <span style="color:var(--text-muted); font-size:12px;">(' + p.group + ')</span></span>' +
+    '</label>';
+  }).join('');
+  container.querySelectorAll('.portfolioCheck').forEach(cb => {
+    cb.addEventListener('change', () => {
+      if (cb.checked) checkedCategories.add(cb.dataset.key);
+      else checkedCategories.delete(cb.dataset.key);
+      updatePortfolio();
+    });
+  });
+}
+
+function categoryRevenue(key) {
+  const p = presets[key];
+  if (key === select.value) {
+    const qty = Number(qtySlider.value), amt = Number(amtSlider.value), fee = Number(feeSlider.value);
+    return (qty * amt * p.annualMult / 10000) * (fee / 100);
+  }
+  return computeDefaultRevenue(p);
+}
+
+function updatePortfolio() {
+  let total = 0;
+  checkedCategories.forEach(key => { total += categoryRevenue(key); });
+  document.getElementById('portfolioCount').textContent = checkedCategories.size + '개';
+  document.getElementById('portfolioRevenue').textContent = total.toFixed(1) + '억원';
+}
+
+select.addEventListener('change', () => applyPreset(select.value));
+[qtySlider, amtSlider, feeSlider].forEach(s => s.addEventListener('input', update));
+renderOverview();
+renderOverviewCriteria();
+renderPortfolio();
+select.value = 'cosmetics';
+applyPreset('cosmetics');
+</script>
+
+</body>
+</html>
