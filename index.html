@@ -205,6 +205,12 @@
   <button class="criteria-btn" onclick="toggleOverviewBasis(this)">기준 보기</button>
 </div>
 <div class="panel" style="margin-bottom: 1.75rem;">
+  <div class="cards" style="grid-template-columns: repeat(2, 1fr); margin-top: 0;">
+    <div class="card"><p class="label">현재 시장 규모 (13개 카테고리 유통액 합계)</p><p class="value" id="totalGmvOut">-</p></div>
+    <div class="card"><p class="label">Zekto 총 예상수익 (합계)</p><p class="value" id="totalRevOut">-</p></div>
+  </div>
+  <div style="border-top: 1px solid var(--hair); margin: 1.25rem 0 1.25rem;"></div>
+
   <p class="helper" style="margin-top:0;">카테고리별 <b style="color: var(--text-primary); font-weight: 500;">Zekto의 예상 수수료 수익</b>(가맹점 매출이나 전체 유통액이 아니라, 거래수수료율을 곱한 Zekto 몫만). 기본 가정값 기준</p>
   <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;">Zekto 예상 수수료 수익 (연간, 억원)</div>
   <div id="overviewChart"></div>
@@ -328,105 +334,105 @@ const presets = {
   cosmetics: {
     group: '미용', name: '화장품 로드샵(올리브영형)', marginRate: 25,
     qtyLabel: '계약 매장수', qtyMin: 50, qtyMax: 500, qtyStep: 10, qtyDefault: 150, qtyUnit: '개',
-    amtLabel: '매장당 월매출', amtMin: 500, amtMax: 5000, amtStep: 100, amtDefault: 2200, amtUnit: '만원',
+    amtLabel: '매장당 월매출', amtMin: 500, amtMax: 5000, amtStep: 10, amtDefault: 2200, amtUnit: '만원',
     annualMult: 12, feeDefault: 6,
     basis: '근거: 화장품 결제 +35% 성장(2025). 올리브영 세일기간 외국인 방문 3년간 11배↑. 매장수는 검증 전 가정치. 마진율은 H&B 리테일 평균 25% 가정.'
   },
   pharmacy: {
     group: '미용', name: '약국(뷰티·건강기능성)', marginRate: 30,
     qtyLabel: '계약 약국수', qtyMin: 50, qtyMax: 500, qtyStep: 10, qtyDefault: 120, qtyUnit: '개',
-    amtLabel: '약국당 월매출', amtMin: 300, amtMax: 3000, amtStep: 100, amtDefault: 1200, amtUnit: '만원',
+    amtLabel: '약국당 월매출', amtMin: 300, amtMax: 3000, amtStep: 10, amtDefault: 1200, amtUnit: '만원',
     annualMult: 12, feeDefault: 6,
     basis: '근거: 약국 결제 +67% 성장(전체 미용 세부품목 중 최고). 대만+342%·리투아니아+304% 등 국가별 급증. 피부·영양관리 웰니스 제품 구매 중심. 마진율은 뷰티기능성 제품 기준 30% 가정.'
   },
   healthfood: {
     group: '미용', name: '건강식품(홍삼·인삼 등)', marginRate: 28,
     qtyLabel: '계약 매장수', qtyMin: 30, qtyMax: 400, qtyStep: 10, qtyDefault: 100, qtyUnit: '개',
-    amtLabel: '매장당 월매출', amtMin: 300, amtMax: 3000, amtStep: 100, amtDefault: 1000, amtUnit: '만원',
+    amtLabel: '매장당 월매출', amtMin: 300, amtMax: 3000, amtStep: 10, amtDefault: 1000, amtUnit: '만원',
     annualMult: 12, feeDefault: 6,
     basis: '근거: 건강식품 결제 +75.1% 성장 — K뷰티·헬스 세부품목 중 최고 성장률. 홍삼·인삼 중심. 마진율 28% 가정(원물 원가 비중 고려).'
   },
   nail: {
     group: '미용', name: '네일숍', marginRate: 40,
     qtyLabel: '계약 매장수', qtyMin: 50, qtyMax: 500, qtyStep: 10, qtyDefault: 200, qtyUnit: '개',
-    amtLabel: '매장당 월매출', amtMin: 300, amtMax: 2000, amtStep: 100, amtDefault: 700, amtUnit: '만원',
+    amtLabel: '매장당 월매출', amtMin: 300, amtMax: 2000, amtStep: 10, amtDefault: 700, amtUnit: '만원',
     annualMult: 12, feeDefault: 8,
     basis: '근거: 외국인 이용건수 +17% 성장. 매장수·매출 모두 가정치, 별도 검증 필요. 마진율은 인건비 중심 서비스업 특성상 40% 가정.'
   },
   derma: {
     group: '의료', name: '피부과', marginRate: 55,
     qtyLabel: '계약 병원수', qtyMin: 5, qtyMax: 100, qtyStep: 5, qtyDefault: 20, qtyUnit: '개',
-    amtLabel: '병원당 월매출(외국인분)', amtMin: 2000, amtMax: 20000, amtStep: 1000, amtDefault: 8000, amtUnit: '만원',
+    amtLabel: '병원당 월매출(외국인분)', amtMin: 2000, amtMax: 20000, amtStep: 10, amtDefault: 8000, amtUnit: '만원',
     annualMult: 12, feeDefault: 3,
     basis: '근거: 외국인 환자 진료과목 56.6%(최대), 서비스업 해외카드매출의 40%. 건당 수수료 모델은 의료법 27조(환자유인알선) 위험 — 강남언니식 광고비(고정) 모델로 재설계 시 합법 경로 존재(2021 복지부 규제샌드박스 확인). 수수료율은 광고비 전환 가정해 3%로 낮게 설정. 마진율은 의료서비스 특성상 55% 가정.'
   },
   plastic: {
     group: '의료', name: '성형외과', marginRate: 50,
     qtyLabel: '계약 병원수', qtyMin: 5, qtyMax: 50, qtyStep: 5, qtyDefault: 10, qtyUnit: '개',
-    amtLabel: '병원당 월매출(외국인분)', amtMin: 3000, amtMax: 30000, amtStep: 1000, amtDefault: 12000, amtUnit: '만원',
+    amtLabel: '병원당 월매출(외국인분)', amtMin: 3000, amtMax: 30000, amtStep: 10, amtDefault: 12000, amtUnit: '만원',
     annualMult: 12, feeDefault: 3,
     basis: '근거: 진료과목 11.4%, 서비스업 해외카드매출의 14%. 대만+55%·중국+25% 이용건수 증가. 2019년 강남언니·바비톡 광고 1,800건 중 863건이 유인알선·과장광고로 적발된 전례 있어 실제 경계선 존재. 마진율 50% 가정(재료·장비 비용 반영).'
   },
   internal: {
     group: '의료', name: '내과(통합, 건강검진 등)', marginRate: 35,
     qtyLabel: '계약 병원수', qtyMin: 5, qtyMax: 80, qtyStep: 5, qtyDefault: 15, qtyUnit: '개',
-    amtLabel: '병원당 월매출(외국인분)', amtMin: 1500, amtMax: 15000, amtStep: 500, amtDefault: 5000, amtUnit: '만원',
+    amtLabel: '병원당 월매출(외국인분)', amtMin: 1500, amtMax: 15000, amtStep: 10, amtDefault: 5000, amtUnit: '만원',
     annualMult: 12, feeDefault: 3,
     basis: '근거: 진료과목 10.0%(피부과·성형외과 다음). 건강검진 패키지 등 의료관광 상품과 연계 가능하나 역시 고장벽. 마진율 35% 가정(검진 장비·인력 비용 반영).'
   },
   cafe: {
     group: '외식', name: '카페', marginRate: 65,
     qtyLabel: '계약 카페수', qtyMin: 50, qtyMax: 1000, qtyStep: 50, qtyDefault: 300, qtyUnit: '개',
-    amtLabel: '카페당 월매출(외국인분)', amtMin: 300, amtMax: 3000, amtStep: 100, amtDefault: 900, amtUnit: '만원',
+    amtLabel: '카페당 월매출(외국인분)', amtMin: 300, amtMax: 3000, amtStep: 10, amtDefault: 900, amtUnit: '만원',
     annualMult: 12, feeDefault: 8,
     basis: '근거: 서울 외식업 5,843억원(+54.5%)에 포함되나 카페 단독 비중 공식 통계 없음. 일부 매장 고객 6명 중 1명이 외국인이라는 사례만 확인 — 가정치 신뢰도 낮음. 마진율은 음료 원가 비중 낮아 65% 가정.'
   },
   restaurant: {
     group: '외식', name: '일반식당(한식 등)', marginRate: 25,
     qtyLabel: '계약 식당수', qtyMin: 50, qtyMax: 1000, qtyStep: 50, qtyDefault: 300, qtyUnit: '개',
-    amtLabel: '식당당 월매출(외국인분)', amtMin: 500, amtMax: 5000, amtStep: 100, amtDefault: 1500, amtUnit: '만원',
+    amtLabel: '식당당 월매출(외국인분)', amtMin: 500, amtMax: 5000, amtStep: 10, amtDefault: 1500, amtUnit: '만원',
     annualMult: 12, feeDefault: 8,
     basis: '근거: 서울 외식업 5,843억원(+54.5%)에 포함, 카페와 분리된 공식 비중 없음. 편의점 K푸드 결제 1,300만건(연평균+34%)이 참고 지표. 마진율은 식자재 원가 비중 높아 25% 가정.'
   },
   photo: {
     group: 'K놀이·즉석사진', name: '즉석사진 (인생네컷·포토이즘 등)', marginRate: 75,
     qtyLabel: '계약 매장수', qtyMin: 50, qtyMax: 1065, qtyStep: 10, qtyDefault: 160, qtyUnit: '개',
-    amtLabel: '매장당 월매출', amtMin: 300, amtMax: 2500, amtStep: 50, amtDefault: 740, amtUnit: '만원',
+    amtLabel: '매장당 월매출', amtMin: 300, amtMax: 2500, amtStep: 10, amtDefault: 740, amtUnit: '만원',
     annualMult: 12, feeDefault: 8,
     basis: '근거: 공정위 공시 가맹점수 1,065개(4개 브랜드 합). 매장당 매출은 브랜드별 연매출(8,880만~2.3억원) 환산치. 신뢰도가 가장 높은 카테고리. 마진율은 인화지·잉크 원가만 발생해 75% 가정(단, 가맹비·임대료 등 고정비는 별도).'
   },
   pcbang: {
     group: 'K놀이·즉석사진', name: 'PC방', marginRate: 20,
     qtyLabel: '계약 매장수', qtyMin: 50, qtyMax: 800, qtyStep: 50, qtyDefault: 200, qtyUnit: '개',
-    amtLabel: '매장당 월매출', amtMin: 300, amtMax: 3000, amtStep: 100, amtDefault: 800, amtUnit: '만원',
+    amtLabel: '매장당 월매출', amtMin: 300, amtMax: 3000, amtStep: 10, amtDefault: 800, amtUnit: '만원',
     annualMult: 12, feeDefault: 8,
     basis: '근거: 외국인 이용건수 +36%(4개국 관광객 기준). 전국 가맹점 수 공식 통계 없어 표본 추정. 마진율은 전기료·라이선스 비용 반영해 20% 가정(F&B 부가매출 제외).'
   },
   karaoke: {
     group: 'K놀이·즉석사진', name: '노래방', marginRate: 30,
     qtyLabel: '계약 매장수', qtyMin: 50, qtyMax: 800, qtyStep: 50, qtyDefault: 150, qtyUnit: '개',
-    amtLabel: '매장당 월매출', amtMin: 300, amtMax: 2500, amtStep: 100, amtDefault: 700, amtUnit: '만원',
+    amtLabel: '매장당 월매출', amtMin: 300, amtMax: 2500, amtStep: 10, amtDefault: 700, amtUnit: '만원',
     annualMult: 12, feeDefault: 8,
     basis: '근거: 외국인 이용건수 +18%. PC방과 함께 "K놀이" 카테고리로 한국관광공사가 분류(전체 K놀이 +35.8% 성장). 마진율 30% 가정.'
   },
   popup: {
     group: '유통·리테일', name: '팝업스토어·굿즈', marginRate: 35,
     qtyLabel: '연간 팝업 파트너십 건수', qtyMin: 10, qtyMax: 100, qtyStep: 5, qtyDefault: 40, qtyUnit: '건',
-    amtLabel: '건당 총매출', amtMin: 1000, amtMax: 10000, amtStep: 500, amtDefault: 3000, amtUnit: '만원',
+    amtLabel: '건당 총매출', amtMin: 1000, amtMax: 10000, amtStep: 10, amtDefault: 3000, amtUnit: '만원',
     annualMult: 1, feeDefault: 6,
     basis: '근거: 장난감·오락기기(팝업굿즈) +191.4%로 전체 카테고리 중 최고 성장. 이벤트성이라 "월매출"이 아닌 "건당 총매출"로 계산. 마진율은 라이선스 굿즈 특성상 35% 가정.'
   },
   cvs: {
     group: '유통·리테일', name: '편의점', marginRate: 15,
     qtyLabel: '계약 매장수', qtyMin: 100, qtyMax: 2000, qtyStep: 100, qtyDefault: 500, qtyUnit: '개',
-    amtLabel: '매장당 월매출(외국인분)', amtMin: 500, amtMax: 3000, amtStep: 100, amtDefault: 1200, amtUnit: '만원',
+    amtLabel: '매장당 월매출(외국인분)', amtMin: 500, amtMax: 3000, amtStep: 10, amtDefault: 1200, amtUnit: '만원',
     annualMult: 12, feeDefault: 4,
     basis: '근거: CU·GS25 등 결제 +50~86% 성장하나 이미 본사 차원의 자체 프로모션 보유. 개별계약 아닌 본사 협상 필요해 고장벽으로 분류, 수수료율도 낮게 가정. 마진율은 유통 리테일 특성상 15%로 가장 낮게 가정.'
   },
   stay: {
     group: '숙박', name: '숙박(게스트하우스·공유숙박)', marginRate: 40,
     qtyLabel: '계약 숙소수', qtyMin: 50, qtyMax: 1000, qtyStep: 50, qtyDefault: 300, qtyUnit: '개',
-    amtLabel: '숙소당 월매출', amtMin: 300, amtMax: 3000, amtStep: 100, amtDefault: 1000, amtUnit: '만원',
+    amtLabel: '숙소당 월매출', amtMin: 300, amtMax: 3000, amtStep: 10, amtDefault: 1000, amtUnit: '만원',
     annualMult: 12, feeDefault: 6,
     basis: '근거: 서울 공유숙박 신규등록 5개월간 3,428건(2025년 연간의 2배). 유형별(호텔·모텔·게스트하우스) 소비 비중 공식 통계는 없음. 마진율은 공유숙박 특성상 40% 가정.'
   }
@@ -444,15 +450,21 @@ let overviewBasisVisible = false;
 function renderOverview() {
   const activeKey = select ? select.value : null;
   const rows = Object.entries(presets).map(([key, p]) => {
-    let rev;
+    let rev, gmv;
     if (key === activeKey && qtySlider.value !== '') {
       const qty = Number(qtySlider.value), amt = Number(amtSlider.value), fee = Number(feeSlider.value);
-      rev = (qty * amt * p.annualMult / 10000) * (fee / 100);
+      gmv = qty * amt * p.annualMult / 10000;
+      rev = gmv * (fee / 100);
     } else {
+      gmv = p.qtyDefault * p.amtDefault * p.annualMult / 10000;
       rev = computeDefaultRevenue(p);
     }
-    return { key, name: p.name, group: p.group, rev, basis: p.basis, isActive: key === activeKey };
+    return { key, name: p.name, group: p.group, rev, gmv, basis: p.basis, isActive: key === activeKey };
   });
+  const totalGmv = rows.reduce((sum, r) => sum + r.gmv, 0);
+  const totalRev = rows.reduce((sum, r) => sum + r.rev, 0);
+  document.getElementById('totalGmvOut').textContent = fmt(totalGmv) + '억원';
+  document.getElementById('totalRevOut').textContent = totalRev.toFixed(1) + '억원';
   rows.sort((a, b) => b.rev - a.rev);
   const maxRev = Math.max(...rows.map(r => r.rev));
   const container = document.getElementById('overviewChart');
