@@ -440,16 +440,28 @@ function computeDefaultRevenue(p) {
   return gmv * (p.feeDefault / 100);
 }
 function renderOverview() {
-  const rows = Object.entries(presets).map(([key, p]) => ({ key, name: p.name, group: p.group, rev: computeDefaultRevenue(p), basis: p.basis }));
+  const activeKey = select ? select.value : null;
+  const rows = Object.entries(presets).map(([key, p]) => {
+    let rev;
+    if (key === activeKey && qtySlider.value !== '') {
+      const qty = Number(qtySlider.value), amt = Number(amtSlider.value), fee = Number(feeSlider.value);
+      rev = (qty * amt * p.annualMult / 10000) * (fee / 100);
+    } else {
+      rev = computeDefaultRevenue(p);
+    }
+    return { key, name: p.name, group: p.group, rev, basis: p.basis, isActive: key === activeKey };
+  });
   rows.sort((a, b) => b.rev - a.rev);
   const maxRev = Math.max(...rows.map(r => r.rev));
   const container = document.getElementById('overviewChart');
   container.innerHTML = rows.map(r => {
     const pct = Math.max(4, (r.rev / maxRev) * 100);
     const color = groupColors[r.group] || '#8B93A1';
+    const nameStyle = r.isActive ? 'color:#fff; font-weight:500;' : 'color:var(--text-secondary);';
+    const tag = r.isActive ? ' <span style="color: var(--gold); font-size: 10.5px;">● 드릴다운 중</span>' : '';
     return '<div style="margin-bottom:14px;">' +
       '<div style="display:flex; align-items:center; gap:10px; font-size:12.5px; margin-bottom:4px;">' +
-        '<span style="width:150px; flex-shrink:0; color:var(--text-secondary);">' + r.name + '</span>' +
+        '<span style="width:150px; flex-shrink:0; ' + nameStyle + '">' + r.name + tag + '</span>' +
         '<div style="flex:1; background:rgba(255,255,255,0.10); border-radius:3px; height:14px; position:relative;">' +
           '<div style="background:' + color + '; width:' + pct + '%; height:100%; border-radius:3px;"></div>' +
         '</div>' +
@@ -515,6 +527,7 @@ function update() {
   document.getElementById('revenueOut').textContent = revenueEok.toFixed(1) + '억원';
   document.getElementById('marginOut').textContent = p.marginRate + '%';
 
+  renderOverview();
   updatePortfolio();
 }
 
