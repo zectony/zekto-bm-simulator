@@ -246,6 +246,16 @@
   <button class="criteria-btn" onclick="openOverviewBasisPanel()">기준 보기</button>
 </div>
 <div class="panel" style="margin-bottom: 1.75rem;">
+  <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom: 0.75rem;">
+    <p class="helper" style="margin:0;">13개 카테고리 합계 (대형쇼핑몰·백화점·면세점 제외)</p>
+    <button class="criteria-btn" onclick="openCriteriaPanel('시장 규모·총수익 산출 기준', document.getElementById('totalCriteriaSrc').innerHTML)">산출 기준</button>
+  </div>
+  <div id="totalCriteriaSrc" style="display:none;">
+    <p style="margin: 0 0 12px;"><b style="color:#fff; font-weight:500;">현재 시장 규모</b> = 13개 카테고리 각각의 연환산 유통액(GMV) 합계. 계약 매장수 × 매장당(또는 건당) 매출 × 연간 배수(월매출은 ×12, 팝업스토어는 건당 총매출이라 ×1)</p>
+    <p style="margin: 0 0 12px;"><b style="color:#fff; font-weight:500;">Zekto 총 예상수익</b> = 각 카테고리 GMV × 해당 카테고리 거래수수료율의 합계</p>
+    <p style="margin: 0 0 12px;">지금 드릴다운 중인 카테고리(아래 드롭다운에서 선택된 것)는 <b style="color:#fff; font-weight:500;">슬라이더의 실시간 값</b>을 사용하고, 나머지 12개는 각 카테고리의 <b style="color:#fff; font-weight:500;">기본 가정값</b>(사전 조사 근거 기반)을 사용해 합산한다.</p>
+    <p style="margin: 0;">대형쇼핑몰·백화점·면세점은 내부에 다양한 브랜드·카테고리가 혼재돼 가맹점 단위로 명확히 나눌 수 없어 분석 범위에서 제외했다(1.2 우선순위 판단 참고).</p>
+  </div>
   <div class="cards" style="grid-template-columns: repeat(2, 1fr); margin-top: 0;">
     <div class="card"><p class="label">현재 시장 규모 (13개 카테고리 유통액 합계)</p><p class="value" id="totalGmvOut">-</p></div>
     <div class="card"><p class="label">Zekto 총 예상수익 (합계)</p><p class="value" id="totalRevOut">-</p></div>
