@@ -280,12 +280,12 @@
     <p style="margin: 0 0 12px;"><b style="color:#fff; font-weight:500;">① 매장 전체 외국인매출(시장 규모)</b> = 계약 매장수 × 매장당(또는 건당) 매출 × 연간 배수(월매출은 ×12, 팝업스토어는 건당 총매출이라 ×1). Zekto 이용 여부와 무관한 <b style="color:#fff; font-weight:500;">전체 시장</b> 크기다.</p>
     <p style="margin: 0 0 12px;"><b style="color:#fff; font-weight:500;">② Zekto 유통액(GMV)</b> = ①× <b style="color:#fff; font-weight:500;">Zekto 결제 침투율</b>. 매장의 외국인 고객 전체가 Zekto로 결제하는 게 아니라, 그중 일부만 Zekto 할인권을 통해 결제하기 때문에 이 비율을 곱해야 실제 Zekto 유통액이 나온다.</p>
     <p style="margin: 0 0 12px;"><b style="color:#fff; font-weight:500;">③ Zekto 예상수익</b> = ②× <b style="color:#fff; font-weight:500;">할인권 판매 수수료율</b>. 예: 10% 할인권을 팔았다면, 전체 외국인 고객이 아니라 <b style="color:#fff; font-weight:500;">Zekto를 통해 실제로 그 할인권을 구매한 고객분의 매출</b>에만 수수료가 발생한다.</p>
-    <p style="margin: 0 0 12px;"><b style="color:#fff; font-weight:500;">"현재 시장 규모"</b> 카드는 13개 카테고리 <b style="color:#fff; font-weight:500;">①(전체 외국인매출)</b>의 합계, <b style="color:#fff; font-weight:500;">"Zekto 총 예상수익"</b>은 13개 카테고리의 <b style="color:#fff; font-weight:500;">③</b> 합계에 아래 위챗페이 부가필터(체크 시)의 수익까지 더한 값이다. 지금 필터로 선택 중인 카테고리는 슬라이더 실시간 값을, 나머지 12개는 각 카테고리의 기본 가정값(사전 조사 근거 기반)을 사용해 합산한다.</p>
+    <p style="margin: 0 0 12px;"><b style="color:#fff; font-weight:500;">"현재 시장 규모"</b> 카드는 13개 카테고리 <b style="color:#fff; font-weight:500;">①(전체 외국인매출)</b>의 합계, <b style="color:#fff; font-weight:500;">"Zekto 총 예상수익"</b>은 13개 카테고리의 <b style="color:#fff; font-weight:500;">③</b> 합계다. 지금 필터로 선택 중인 카테고리는 슬라이더 실시간 값을, 나머지 12개는 각 카테고리의 기본 가정값(사전 조사 근거 기반)을 사용해 합산한다.</p>
     <p style="margin: 0;">대형쇼핑몰·백화점·면세점은 내부에 다양한 브랜드·카테고리가 혼재돼 가맹점 단위로 명확히 나눌 수 없어 분석 범위에서 제외했다(1.2 우선순위 판단 참고).</p>
   </div>
   <div class="cards" style="grid-template-columns: repeat(2, 1fr); margin-top: 0;">
     <div class="card"><p class="label">현재 시장 규모 (13개 카테고리 외국인매출 합계)</p><p class="value" id="totalGmvOut">-</p></div>
-    <div class="card"><p class="label">Zekto 총 예상수익 (13개 카테고리 + 위챗페이)</p><p class="value" id="totalRevOut">-</p></div>
+    <div class="card"><p class="label">Zekto 총 예상수익 (13개 카테고리 합계)</p><p class="value" id="totalRevOut">-</p></div>
   </div>
   <div style="border-top: 1px solid var(--hair); margin: 1.25rem 0 1.25rem;"></div>
 
@@ -295,7 +295,7 @@
 
   <div style="border-top: 1px solid var(--hair); margin: 1.5rem 0 1.25rem;"></div>
 
-  <p class="helper">그룹(대분류) 또는 세부 카테고리를 선택해 가정값을 직접 조정하세요. <span style="color: var(--text-muted);">아래 결과는 선택한 카테고리 1개만의 값이며, 위 "13개 카테고리 + 위챗페이" 카드에도 실시간으로 반영됩니다.</span></p>
+  <p class="helper">그룹(대분류) 또는 세부 카테고리를 선택해 가정값을 직접 조정하세요. <span style="color: var(--text-muted);">아래 결과는 선택한 카테고리 1개만의 값이며, 위 "13개 카테고리 합계" 카드에도 실시간으로 반영됩니다.</span></p>
   <select id="categorySelect"></select>
 
   <div class="slider-row">
@@ -324,31 +324,6 @@
     <div class="card"><p class="label">평균 마진율(1개당)</p><p class="value" id="marginOut">-</p></div>
   </div>
 
-  <div style="border-top: 1px solid var(--hair); margin: 1.5rem 0 1.25rem;"></div>
-
-  <label style="display:flex; align-items:center; gap:10px; cursor:pointer; margin-bottom: 12px;">
-    <input type="checkbox" id="wechatToggle" style="width:16px; height:16px; accent-color: var(--gold);">
-    <span style="font-weight:500; color:#fff; font-size:14px;">부가 필터: 위챗페이 가맹점 등록대행 포함</span>
-    <span style="color:var(--text-muted); font-size:12px;">(업종 무관, 선택한 카테고리 위에 추가로 합산)</span>
-  </label>
-  <div id="wechatControls" style="display:none;">
-    <div class="slider-row">
-      <div class="slider-label"><label>등록 가맹점수</label><span class="val" id="wQtyOut">-</span></div>
-      <input type="range" id="wQtySlider">
-    </div>
-    <div class="slider-row">
-      <div class="slider-label"><label>가맹점당 월 위챗페이 결제액(외국인)</label><span class="val" id="wAmtOut">-</span></div>
-      <input type="range" id="wAmtSlider">
-    </div>
-    <div class="slider-row">
-      <div class="slider-label"><label>위챗페이 결제 수수료율</label><span class="val" id="wFeeOut">-</span></div>
-      <input type="range" id="wFeeSlider" min="0" max="20" step="1">
-    </div>
-    <button class="criteria-btn" onclick="openCriteriaPanel('위챗페이 가맹점 등록대행 · 근거', wechatAddon.basis)" style="margin-bottom: 10px;">기준 보기</button>
-    <div class="cards" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 0;">
-      <div class="card"><p class="label">위챗페이 유통액</p><p class="value" id="wGmvOut">-</p></div>
-      <div class="card"><p class="label">위챗페이 예상수익</p><p class="value" id="wRevOut">-</p></div>
-    </div>
   </div>
 </div>
 
@@ -574,18 +549,6 @@ const presets = {
   }
 };
 
-// 위챗페이 가맹점 등록대행: 특정 업종 카테고리가 아니라, 카테고리와 무관하게
-// 어떤 가맹점이든 추가로 등록시킬 수 있는 부가 필터라 presets(카테고리 드롭다운)에 넣지 않고 별도로 관리한다.
-const wechatAddon = {
-  name: '위챗페이 가맹점 등록대행', marginRate: 90,
-  qtyLabel: '등록 가맹점수', qtyMin: 20, qtyMax: 1000, qtyStep: 10, qtyDefault: 150, qtyUnit: '개',
-  amtLabel: '가맹점당 월 위챗페이 결제액(외국인)', amtMin: 100, amtMax: 5000, amtStep: 10, amtDefault: 800, amtUnit: '만원',
-  annualMult: 12,
-  feeValues: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-  feeDefault: 0,
-  basis: '근거: 카테고리(업종)와 무관하게 어떤 가맹점이든 추가로 영업해 위챗페이 결제 가능 사업자로 등록시켜주는 부가 결제대행 사업. 등록된 가맹점에서 중국인 등 외국인 고객이 위챗페이로 결제하는 금액 전체(=이미 100% Zekto 채널)에 수수료가 붙는다. 원가가 거의 없어 마진율이 매우 높고(90% 가정), 결제대행업 관행상 수수료율은 0~1% 구간은 0.1%p 단위, 이후 1%p 단위로 세분화. 계약 전에는 기본값 0%.'
-};
-
 const groupColors = {
   '미용': '#4FD1C5', 'K놀이·즉석사진': '#8B93A1', '외식': '#E0A63A',
   '숙박': '#E0A63A', '유통·리테일': '#E2604F', '의료': '#E2604F'
@@ -615,7 +578,7 @@ function renderOverview() {
     return { key, name: p.name, group: p.group, rev, market, qty, amt, pen, fee, qtyUnit: p.qtyUnit, amtUnit: p.amtUnit, basis: p.basis, isActive: key === activeKey };
   });
   const totalMarket = rows.reduce((sum, r) => sum + r.market, 0);
-  const totalRev = rows.reduce((sum, r) => sum + r.rev, 0) + wechatRevenue();
+  const totalRev = rows.reduce((sum, r) => sum + r.rev, 0);
   document.getElementById('totalGmvOut').textContent = fmt(totalMarket) + '억원';
   document.getElementById('totalRevOut').textContent = totalRev.toFixed(1) + '억원';
   rows.sort((a, b) => b.rev - a.rev);
@@ -772,50 +735,8 @@ function updatePortfolio() {
 select.addEventListener('change', () => applyPreset(select.value));
 [qtySlider, amtSlider, penSlider, feeSlider].forEach(s => s.addEventListener('input', update));
 
-// 위챗페이 부가 필터 (업종 무관, 카테고리와 별개로 항상 합산)
-const wechatToggle = document.getElementById('wechatToggle');
-const wechatControls = document.getElementById('wechatControls');
-const wQtySlider = document.getElementById('wQtySlider');
-const wAmtSlider = document.getElementById('wAmtSlider');
-const wFeeSlider = document.getElementById('wFeeSlider');
-
-function getWechatFee() {
-  return wechatAddon.feeValues[Number(wFeeSlider.value)];
-}
-
-function wechatRevenue() {
-  if (!wechatToggle.checked) return 0;
-  const qty = Number(wQtySlider.value), amt = Number(wAmtSlider.value), fee = getWechatFee();
-  const gmv = qty * amt * wechatAddon.annualMult / 10000;
-  return gmv * (fee / 100);
-}
-
-function updateWechat() {
-  const qty = Number(wQtySlider.value), amt = Number(wAmtSlider.value), fee = getWechatFee();
-  document.getElementById('wQtyOut').textContent = fmt(qty) + wechatAddon.qtyUnit;
-  document.getElementById('wAmtOut').textContent = fmt(amt) + wechatAddon.amtUnit;
-  document.getElementById('wFeeOut').textContent = (fee < 1 ? fee.toFixed(1) : fee) + '%';
-  const gmv = qty * amt * wechatAddon.annualMult / 10000;
-  document.getElementById('wGmvOut').textContent = gmv.toFixed(1) + '억원';
-  document.getElementById('wRevOut').textContent = (gmv * (fee / 100)).toFixed(1) + '억원';
-  renderOverview();
-  updatePortfolio();
-}
-
-wQtySlider.min = wechatAddon.qtyMin; wQtySlider.max = wechatAddon.qtyMax; wQtySlider.step = wechatAddon.qtyStep; wQtySlider.value = wechatAddon.qtyDefault;
-wAmtSlider.min = wechatAddon.amtMin; wAmtSlider.max = wechatAddon.amtMax; wAmtSlider.step = wechatAddon.amtStep; wAmtSlider.value = wechatAddon.amtDefault;
-wFeeSlider.min = 0; wFeeSlider.max = wechatAddon.feeValues.length - 1; wFeeSlider.step = 1;
-wFeeSlider.value = wechatAddon.feeValues.indexOf(wechatAddon.feeDefault);
-
-wechatToggle.addEventListener('change', () => {
-  wechatControls.style.display = wechatToggle.checked ? 'block' : 'none';
-  updateWechat();
-});
-[wQtySlider, wAmtSlider, wFeeSlider].forEach(s => s.addEventListener('input', updateWechat));
-
 renderOverview();
 renderPortfolio();
-updateWechat();
 select.value = 'cosmetics';
 applyPreset('cosmetics');
 
