@@ -312,6 +312,7 @@
 
   <p class="helper">그룹(대분류) 또는 세부 카테고리를 선택해 가정값을 직접 조정하세요. <span style="color: var(--text-muted);">아래 결과는 선택한 카테고리 1개만의 값이며, 위 "13개 카테고리 합계" 카드에도 실시간으로 반영됩니다.</span></p>
   <select id="categorySelect"></select>
+  <div id="defaultAssumptionCaption" style="font-size: 11.5px; color: var(--text-muted); background: rgba(255,255,255,0.05); border-radius: 6px; padding: 8px 10px; margin: 8px 0 16px;"></div>
 
   <div class="slider-row">
     <div class="slider-label"><label id="qtyLabel">계약 매장수</label><span class="val" id="qtyOut">-</span></div>
@@ -663,6 +664,13 @@ function applyPreset(key) {
     feeSlider.value = p.feeDefault;
   }
   document.getElementById('basisNote').textContent = p.basis;
+
+  const defFeeDisp = p.feeDefault < 1 ? p.feeDefault.toFixed(1) : p.feeDefault;
+  document.getElementById('defaultAssumptionCaption').innerHTML =
+    '<b style="color: var(--text-secondary); font-weight: 500;">기본 가정값(변경 전 기준선):</b> ' +
+    fmt(p.qtyDefault) + p.qtyUnit + ' · ' + fmt(p.amtDefault) + p.amtUnit +
+    ' · 도입률 ' + p.penetrationDefault + '% · ' + (p.feeLabel || '위챗 가맹수수료') + ' ' + defFeeDisp + '%';
+
   update();
 }
 
