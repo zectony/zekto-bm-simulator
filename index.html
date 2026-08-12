@@ -264,7 +264,7 @@
 <div class="section-head">
   <div>
     <p class="section-eyebrow">02 · Revenue Simulation</p>
-    <p class="section-title">Zekto 예상수익 비교 · 드릴다운</p>
+    <p class="section-title">Zekto 예상수익 비교 · 필터</p>
   </div>
   <button class="criteria-btn" onclick="openOverviewBasisPanel()">기준 보기</button>
 </div>
@@ -277,7 +277,7 @@
     <p style="margin: 0 0 12px;"><b style="color:#fff; font-weight:500;">① 매장 전체 외국인매출(시장 규모)</b> = 계약 매장수 × 매장당(또는 건당) 매출 × 연간 배수(월매출은 ×12, 팝업스토어는 건당 총매출이라 ×1). Zekto 이용 여부와 무관한 <b style="color:#fff; font-weight:500;">전체 시장</b> 크기다.</p>
     <p style="margin: 0 0 12px;"><b style="color:#fff; font-weight:500;">② Zekto 유통액(GMV)</b> = ①× <b style="color:#fff; font-weight:500;">Zekto 결제 침투율</b>. 매장의 외국인 고객 전체가 Zekto로 결제하는 게 아니라, 그중 일부만 Zekto 할인권을 통해 결제하기 때문에 이 비율을 곱해야 실제 Zekto 유통액이 나온다.</p>
     <p style="margin: 0 0 12px;"><b style="color:#fff; font-weight:500;">③ Zekto 예상수익</b> = ②× <b style="color:#fff; font-weight:500;">할인권 판매 수수료율</b>. 예: 10% 할인권을 팔았다면, 전체 외국인 고객이 아니라 <b style="color:#fff; font-weight:500;">Zekto를 통해 실제로 그 할인권을 구매한 고객분의 매출</b>에만 수수료가 발생한다.</p>
-    <p style="margin: 0 0 12px;">"현재 시장 규모" 카드는 14개 카테고리의 <b style="color:#fff; font-weight:500;">①(전체 외국인매출)</b> 합계, "Zekto 총 예상수익"은 14개 카테고리의 <b style="color:#fff; font-weight:500;">③</b> 합계다. 지금 드릴다운 중인 카테고리는 슬라이더 실시간 값을, 나머지 13개는 각 카테고리의 기본 가정값(사전 조사 근거 기반)을 사용해 합산한다.</p>
+    <p style="margin: 0 0 12px;">"현재 시장 규모" 카드는 14개 카테고리의 <b style="color:#fff; font-weight:500;">①(전체 외국인매출)</b> 합계, "Zekto 총 예상수익"은 14개 카테고리의 <b style="color:#fff; font-weight:500;">③</b> 합계다. 지금 필터로 선택 중인 카테고리는 슬라이더 실시간 값을, 나머지 13개는 각 카테고리의 기본 가정값(사전 조사 근거 기반)을 사용해 합산한다.</p>
     <p style="margin: 0;">대형쇼핑몰·백화점·면세점은 내부에 다양한 브랜드·카테고리가 혼재돼 가맹점 단위로 명확히 나눌 수 없어 분석 범위에서 제외했다(1.2 우선순위 판단 참고).</p>
   </div>
   <div class="cards" style="grid-template-columns: repeat(2, 1fr); margin-top: 0;">
@@ -328,7 +328,7 @@
     <p class="section-title">포트폴리오 합산</p>
   </div>
 </div>
-<p class="helper">Zekto는 단일 카테고리가 아니라 여러 카테고리를 조합해 수익화합니다. 체크한 카테고리 중 현재 드릴다운 중인 항목은 슬라이더 값을, 나머지는 기본 가정값을 사용해 합산합니다.</p>
+<p class="helper">Zekto는 단일 카테고리가 아니라 여러 카테고리를 조합해 수익화합니다. 체크한 카테고리 중 현재 필터로 선택 중인 항목은 슬라이더 값을, 나머지는 기본 가정값을 사용해 합산합니다.</p>
 <div id="portfolioList" class="panel" style="margin-bottom: 12px;"></div>
 <div class="cards">
   <div class="card"><p class="label">선택 카테고리 수</p><p class="value" id="portfolioCount">0개</p></div>
@@ -594,7 +594,7 @@ function renderOverview() {
     const pct = Math.max(4, (r.rev / maxRev) * 100);
     const color = groupColors[r.group] || '#8B93A1';
     const nameStyle = r.isActive ? 'color:#fff; font-weight:500;' : 'color:var(--text-secondary);';
-    const tag = r.isActive ? ' <span style="color: var(--gold); font-size: 10.5px;">● 드릴다운 중</span>' : '';
+    const tag = r.isActive ? ' <span style="color: var(--gold); font-size: 10.5px;">● 필터 선택 중</span>' : '';
     return '<div style="display:flex; align-items:center; gap:10px; font-size:12.5px; margin-bottom:9px;">' +
         '<span style="width:150px; flex-shrink:0; ' + nameStyle + '">' + r.name + tag + '</span>' +
         '<div style="flex:1; background:rgba(255,255,255,0.10); border-radius:3px; height:14px; position:relative;">' +
