@@ -202,9 +202,10 @@
 
 <div class="section-head">
   <p class="section-title"><span class="section-index">02</span>Zekto 예상수익 비교 · 드릴다운</p>
+  <button class="criteria-btn" onclick="toggleOverviewBasis(this)">기준 보기</button>
 </div>
 <div class="panel" style="margin-bottom: 1.75rem;">
-  <p class="helper" style="margin-top:0;">카테고리별 <b style="color: var(--text-primary); font-weight: 500;">Zekto의 예상 수수료 수익</b>(가맹점 매출이나 전체 유통액이 아니라, 거래수수료율을 곱한 Zekto 몫만). 기본 가정값 기준 — 막대 아래 근거 표시</p>
+  <p class="helper" style="margin-top:0;">카테고리별 <b style="color: var(--text-primary); font-weight: 500;">Zekto의 예상 수수료 수익</b>(가맹점 매출이나 전체 유통액이 아니라, 거래수수료율을 곱한 Zekto 몫만). 기본 가정값 기준</p>
   <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;">Zekto 예상 수수료 수익 (연간, 억원)</div>
   <div id="overviewChart"></div>
 
@@ -439,6 +440,7 @@ function computeDefaultRevenue(p) {
   const gmv = p.qtyDefault * p.amtDefault * p.annualMult / 10000;
   return gmv * (p.feeDefault / 100);
 }
+let overviewBasisVisible = false;
 function renderOverview() {
   const activeKey = select ? select.value : null;
   const rows = Object.entries(presets).map(([key, p]) => {
@@ -467,7 +469,7 @@ function renderOverview() {
         '</div>' +
         '<span class="num" style="width:72px; text-align:right; flex-shrink:0; font-weight:500; color:#fff;">' + r.rev.toFixed(1) + '억</span>' +
       '</div>' +
-      '<div style="padding-left:160px; font-size:11.5px; color:var(--text-muted); line-height:1.5;">' + r.basis + '</div>' +
+      '<div class="ov-basis' + (overviewBasisVisible ? '' : ' hidden') + '" style="padding-left:160px; font-size:11.5px; color:var(--text-muted); line-height:1.5;">' + r.basis + '</div>' +
     '</div>';
   }).join('');
 }
@@ -506,6 +508,12 @@ function toggleCriteria(id, btn) {
   const willShow = el.classList.contains('hidden');
   el.classList.toggle('hidden');
   btn.textContent = willShow ? '기준 숨기기' : '기준 보기';
+}
+
+function toggleOverviewBasis(btn) {
+  overviewBasisVisible = !overviewBasisVisible;
+  btn.textContent = overviewBasisVisible ? '기준 숨기기' : '기준 보기';
+  renderOverview();
 }
 
 function update() {
