@@ -59,22 +59,19 @@
     font-family: 'Noto Sans KR', sans-serif; font-weight: 700; font-size: 30px;
     letter-spacing: -0.01em; margin: 0 0 0.5rem; color: #ffffff;
   }
-  h1 .en {
-    font-family: 'IBM Plex Mono', monospace; font-weight: 400; font-size: 15px;
-    color: var(--text-muted); letter-spacing: 0.01em; margin-left: 10px; vertical-align: middle;
-  }
   p.sub { color: var(--text-secondary); font-size: 15px; margin: 0; max-width: 540px; }
 
   .section-head {
-    display: flex; align-items: baseline; justify-content: space-between;
+    display: flex; align-items: flex-start; justify-content: space-between;
     margin: 2.75rem 0 1rem; gap: 12px;
+  }
+  .section-eyebrow {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 500;
+    color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase;
+    margin: 0 0 4px;
   }
   .section-title {
     font-family: 'Noto Sans KR', sans-serif; font-size: 18.5px; font-weight: 700; color: #ffffff; margin: 0;
-  }
-  .section-title .en {
-    font-family: 'IBM Plex Mono', monospace; font-weight: 400; font-size: 12px;
-    color: var(--gold); letter-spacing: 0.02em; margin-left: 8px;
   }
   .section-index {
     font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gold);
@@ -201,8 +198,8 @@
 
 <header>
   <a id="downloadBtn" class="criteria-btn" href="#" download="zekto-bm-simulator.html">HTML 다운로드</a>
-  <p class="eyebrow">Zekto · Market Platform</p>
-  <h1>마켓플랫폼 BM 사업성 검토 시뮬레이터<span class="en">Market Platform BM Feasibility Simulator</span></h1>
+  <p class="eyebrow">Market Platform BM Feasibility Simulator</p>
+  <h1>마켓플랫폼 BM 사업성 검토 시뮬레이터</h1>
   <p class="sub">카테고리별 시장침투 우선순위와 민감도 시뮬레이터. 가정을 조정하며 여러 카테고리를 조합해 합산 수익을 확인합니다.</p>
   <div class="doc-meta">
     <span>문서번호 <b>ZKT-BM-2026-08</b></span>
@@ -213,13 +210,16 @@
 </header>
 
 <div class="section-head">
-  <p class="section-title"><span class="section-index">01</span>시장침투 우선순위<span class="en">Market Entry Priority</span></p>
+  <div>
+    <p class="section-eyebrow">01 · Entry-Barrier-Weighted Priority</p>
+    <p class="section-title">진입장벽을 고려한 시장침투 우선순위</p>
+  </div>
   <div style="display:flex; gap:8px;">
     <button class="criteria-btn" onclick="openCriteriaPanel('시장침투 우선순위 · 분류 기준', document.getElementById('quadrantCriteriaSrc').innerHTML)">분류 기준</button>
     <button class="criteria-btn" onclick="openCriteriaPanel('의료 카테고리 · 알선 법적 규제', document.getElementById('legalCriteriaSrc').innerHTML)">의료 법적 규제</button>
   </div>
 </div>
-<p class="helper">저장벽·고장벽 분류 기준, 그리고 쿠폰·선결제 시술권 판매가 왜 카페·식당과 다르게 취급되는지</p>
+<p class="helper">진입장벽 × 수익성 기준 4단계 분류 — 의료 카테고리는 알선 관련 법적 규제가 별도로 적용됩니다</p>
 <div id="quadrantCriteriaSrc" style="display:none;">
   · <b style="color: var(--tier-1); font-weight: 500;">1차 진입(저장벽·고수익)</b>: 리테일 마진 20~35%대, 의료법 등 특별 규제 없음, 최고 성장률(+35~191%)<br>
   · <b style="color: var(--tier-2); font-weight: 500;">2차(저장벽·저수익)</b>: 계약은 쉽지만 건당 단가가 낮아(즉석사진 5천원대 등) 수익성 제한적<br>
@@ -262,7 +262,10 @@
 </div>
 
 <div class="section-head">
-  <p class="section-title"><span class="section-index">02</span>Zekto 예상수익 비교 · 드릴다운<span class="en">Revenue Simulation</span></p>
+  <div>
+    <p class="section-eyebrow">02 · Revenue Simulation</p>
+    <p class="section-title">Zekto 예상수익 비교 · 드릴다운</p>
+  </div>
   <button class="criteria-btn" onclick="openOverviewBasisPanel()">기준 보기</button>
 </div>
 <div class="panel" style="margin-bottom: 1.75rem;">
@@ -320,7 +323,10 @@
 </div>
 
 <div class="section-head">
-  <p class="section-title"><span class="section-index">03</span>포트폴리오 합산<span class="en">Portfolio Aggregation</span></p>
+  <div>
+    <p class="section-eyebrow">03 · Portfolio Aggregation</p>
+    <p class="section-title">포트폴리오 합산</p>
+  </div>
 </div>
 <p class="helper">Zekto는 단일 카테고리가 아니라 여러 카테고리를 조합해 수익화합니다. 체크한 카테고리 중 현재 드릴다운 중인 항목은 슬라이더 값을, 나머지는 기본 가정값을 사용해 합산합니다.</p>
 <div id="portfolioList" class="panel" style="margin-bottom: 12px;"></div>
@@ -366,7 +372,10 @@
 </div>
 
 <div class="section-head">
-  <p class="section-title"><span class="section-index">04</span>오프라인 검증 계획<span class="en">Field Validation Plan</span></p>
+  <div>
+    <p class="section-eyebrow">04 · Field Validation Plan</p>
+    <p class="section-title">오프라인 검증 계획</p>
+  </div>
 </div>
 <p class="helper">우선순위·기간·성공기준(공통)</p>
 
